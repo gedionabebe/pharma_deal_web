@@ -1,0 +1,15 @@
+{% block content %}
+<h1> signup </h1>
+<form action="{%url 'signup'%}" method='POST'>
+    {% csrf_token %}
+    {{signup_form.as_p}}
+    <input type='radio' id='distributor' name='kind' value="distributor">
+    <label for='distributor'>Distributor</label>
+    <input type='radio' id='pharmacy' name='kind' value="pharmacy">
+    <label for='pharmacy'>Pharmacy</label>
+    <input type="submit" value="Enter">
+</form>
+{% endblock %}
+<p style="color: red;font-weight: bold;">{{test}}</p>
+<p style="color: red;font-weight: bold;">{{confirm}}</p>
+
