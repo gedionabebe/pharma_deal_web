@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block page_title %}{% endblock %}</title>
+        
+        {% load staticfiles %}
+
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"
+
+    </head>
+    {% block content %} {% endblock %}
+</html>
