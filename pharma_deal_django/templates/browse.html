@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h1> Browse Products </h1>  
+  
+  <a href="{%url 'login'%}">Logout</a>
+  
+
+  
+   {% for product in products.values %}
+   <div>
+    <p><img src="{{product.product_image}}" width="70" height="70"></p>
+    <p> Name: {{product.product_name}} </p>
+    <p> Description: {{product.description}} </p>
+    <p>Brand: {{product.brand}}</p>
+    <p>Manufacturing company: {{product.manufacturing_company}}</p>
+    <p>Form of preparation: {{product.form_of_preparation}}</p>
+    <p> Category: {{product.category}} </p>
+    <p> Price: {{product.price}} </p>
+    <p> Manufacturing date: {{product.manufacturing_date}} </p>
+    <p> Expiry date: {{product.expiry_date}}</p>
+  
+</div>
+  <br>
+  {% endfor %}
+  
+</body>
+</html>

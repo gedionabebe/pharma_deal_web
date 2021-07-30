@@ -1,0 +1,19 @@
+{% block content %}
+<h1> Update a Product </h1>
+<a href="{%url 'browse'%}">Browse for Products </a>
+<a href="{%url 'inventory'%}">Browse your inventory </a>
+<a href="{%url 'login'%}">Logout</a>
+<br>
+<img src="{{single_product.val.product_image}}" width="100" height="100" >
+<form action="{%url 'update' single_product.val.product_id%}" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <table>{{update_form.as_table}}</table>
+    
+    <br>
+    <label for='pro_image' style="font-weight: bold;">Add Image:</label>
+    <input type='file' name='pro_image' >
+    <br>
+    <input type="submit" value="Enter">
+</form>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% block content %}
+<h1> Create a Product </h1>
+<a href="{%url 'browse'%}">Browse for Products </a>
+<a href="{%url 'inventory'%}">Browse your inventory </a>
+<a href="{%url 'login'%}">Logout</a>
+
+<br>
+
+<form action="{%url 'create'%}" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    
+    <table>{{create_form.as_table}}</table>
+    <label for='category' style="font-weight: bold;">Choose a Category:</label>
+    
+    <br>
+    <label for='pro_image' style="font-weight: bold;">Add Image:</label>
+    <input type='file' name='pro_image' >
+    <br>
+    <input type="submit" value="Enter">
+</form>
+{% endblock %}

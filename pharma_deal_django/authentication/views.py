@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.contrib.sessions.backends.base import SessionBase
+from django.shortcuts import redirect, render
 from . import firebase
 from .forms import loginForm, signupForm
+from django.contrib.sessions.backends.file import SessionStore
+
 
 # Create your views here.
 
@@ -27,15 +30,21 @@ def signup(request):
         print('10000000000success0000000001',user['localId'])
         print(user['localId'])
         u_id=user['localId']
+        request.session['status'] = 'logged_in'
+        request.session['user_id'] = u_id
+        print(request.session['logged_in'],request.session['user_id'])
+
+
         
         if type_user == 'distributor':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
             firebase.database.child('Distributors').child('%s'%u_id).set(data)
-            return render(request, 'home.html', {'user':user})
+            return redirect('/products/inventory')
         elif type_user == 'pharmacy':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
             firebase.database.child('Pharmacies').child('%s'%u_id).set(data)
-            return render(request, 'mine.html', {'user':user})
+            return redirect('/products/browse')
+            #return render(request, 'mine.html', {'user':user})
 
 
 
@@ -57,6 +66,10 @@ def login(request):
   global user
   distributors = firebase.database.child('Distributors').get().val()
   pharmacies = firebase.database.child('Pharmacies').get().val()
+  request.session['status'] = 'logged_out'
+  request.session['user_id'] = '' 
+  print(request.session['status'],request.session['user_id'])
+
 
 
   if form.is_valid():
@@ -66,12 +79,18 @@ def login(request):
       user = firebase.auth.sign_in_with_email_and_password(email,password)
       print('10000000000success0000000001',user['localId'])
       u_id=user['localId']
+
+      request.session['status'] = 'logged_in'
+      request.session['user_id'] = u_id
+      print(request.session['status'],request.session['user_id'])
+      
       if u_id in distributors:
 
-        return render(request, 'home.html', {'user':user})
+        return redirect('/products/inventory')
 
       elif u_id in pharmacies:
-        return render(request, 'mine.html', {'user':user})
+        return redirect('/products/browse')
+        #return render(request, 'mine.html', {'user':user})
     except:
       return render(request, 'login.html', {'login_form':login_form, 'incorrect':incorrect})
   else:
