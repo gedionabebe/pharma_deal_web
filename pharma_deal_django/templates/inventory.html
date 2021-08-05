@@ -1,36 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Owner's Page
+{% endblock %}
+<br>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
 </head>
+{% block content %}
+
 <body>
-  <h1> Browse Products </h1>  
-  {% block content %}
+
+
+
+  <main id="main">
+
+    <!-- ======= Breadcrumbs ======= -->
+
+
+  </main><!-- End #main -->
+
+  <section id="portfolio" class="portfolio">
+    <div class="container" style="margin-top: 50px;">
+
+      <div class="section-title">
+        <h1> Browse Products </h1>
+      </div>
+
+      <br>
+
+      <h1> Browse Products </h1>
+      {% endfor %}
+      <br>
+      <!-- <div class="section-title">
   <a href="{%url 'login'%}">Logout</a>
   <a href="{%url 'create'%}">Create Products </a>
   <a href="{%url 'browse'%}">Browse for Products </a>
   <a href="{%url 'login'%}">Logout</a>
+</div> -->
+      <!-- <br> -->
 
-  {% endblock %}
-   {% for product in user_inventory.values %}
-   <div>
-  <p><img src="{{product.product_image}}" width="70" height="70"></p>
-  <p> Name: {{product.product_name}} </p>
-  <p> Description: {{product.description}} </p>
-  <p>Brand: {{product.brand}}</p>
-  <p>Manufacturing company: {{product.manufacturing_company}}</p>
-  <p>Form of preparation: {{product.form_of_preparation}}</p>
-  <p> Category: {{product.category}} </p>
-  <p> Price: {{product.price}} </p>
-  <p> Manufacturing date: {{product.manufacturing_date}} </p>
-  <p> Expiry date: {{product.expiry_date}}</p>
-  <a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a href="{% url 'delete' product.product_id %}"><button type="button">Delete</button></a> <a><button type="button">Review</button></a>
-</div>
-  <br>
-  {% endfor %}
-  
-</body>
-</html>
+      <div class="row portfolio-container">
+        {% for product in user_inventory.values %}
+        <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
+          <div class="portfolio-wrap">
+            <div class="portfolio-info">
+              <p><img src="{{product.product_image}}" width="70" height="70"></p>
+              <p> Name: {{product.product_name}} </p>
+              <p> Description: {{product.description}} </p>
+              <p>Brand: {{product.brand}}</p>
+              <p>Manufacturing company: {{product.manufacturing_company}}</p>
+              <p>Form of preparation: {{product.form_of_preparation}}</p>
+              <p> Category: {{product.category}} </p>
+              <p> Price: {{product.price}} </p>
+              <p> Manufacturing date: {{product.manufacturing_date}} </p>
+              <p> Expiry date: {{product.expiry_date}}</p>
+              <a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a
+                href="{% url 'delete' product.product_id %}"><button type="button">Delete</button></a> <a><button
+                  type="button">Review</button></a>
+
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+        {%endblock%}
+
+      </div>
