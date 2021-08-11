@@ -33,7 +33,7 @@ def create(request):
             category = p_form.cleaned_data['category']
             price = int(p_form.cleaned_data['price'])
             product_image = request.FILES['pro_image']
-            product_id = len(firebase.database.child('Products').get().val())+1
+            product_id = len(firebase.database.child('Products').get().val())+138
             user_id = request.session['user_id']
 
             path = os.path.join(BASE_DIR, 'media/image/%d'%product_id)
@@ -126,6 +126,7 @@ def inventory(request):
         
         try:
             user_inventory = firebase.database.child('Products').order_by_child('user_id').equal_to('%s'%user_id).get().val()
+            print(user_inventory)
 
             return render(request, 'inventory.html', {'user_inventory':user_inventory})
         except:
