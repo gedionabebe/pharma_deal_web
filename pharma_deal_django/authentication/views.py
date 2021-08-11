@@ -30,8 +30,9 @@ def signup(request):
         print('10000000000success0000000001',user['localId'])
         print(user['localId'])
         u_id=user['localId']
-        request.session['status'] = 'logged_in'
-        request.session['user_id'] = u_id
+        #request.session['status'] = 'logged_in'
+        #request.session['user_id'] = u_id
+        session_set(request,u_id)
         print(request.session['logged_in'],request.session['user_id'])
 
 
@@ -96,3 +97,8 @@ def login(request):
   else:
     print(form.errors)
   return render(request, 'login.html',{'login_form':login_form})
+
+def session_set(request,uid):
+  request.session['status'] = 'logged_in'
+  request.session['user_id'] = uid
+  print(request.session['status'],request.session['user_id'])

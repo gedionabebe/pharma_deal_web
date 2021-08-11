@@ -34,6 +34,12 @@ Homepage
       </div>
 
       <br>
+       <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="search">Search</label>
+    <input type="text" name="search">
+    <input type="submit" value="Enter">
+  </form>
 
       <div class="row portfolio-container">
         {% for product in products.values %}

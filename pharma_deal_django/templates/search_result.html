@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h1> Search results </h1>  
+  
+  <a href="{%url 'login'%}">Logout</a>
+  <br>
+  <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="search">Search</label>
+    <input type="text" name="search">
+    <input type="submit" value="Enter">
+  </form>
+  
+
+  {% if search_result%}
+   {% for search_result in search_result %}
+   <div>
+    <p><img src="{{search_result.product_image}}" width="70" height="70"></p>
+    <p> Name: {{search_result.product_name}} </p>
+    <p> Description: {{search_result.description}} </p>
+    <p>Brand: {{search_result.brand}}</p>
+    <p>Manufacturing company: {{search_result.manufacturing_company}}</p>
+    <p>Form of preparation: {{search_result.form_of_preparation}}</p>
+    <p> Category: {{search_result.category}} </p>
+    <p> Price: {{search_result.price}} </p>
+    <p> Manufacturing date: {{search_result.manufacturing_date}} </p>
+    <p> Expiry date: {{search_result.expiry_date}}</p>
+  
+</div>
+  <br>
+  {% endfor %}
+  {%else%}
+  {{no_reslut}}
+  {%endif%}
+  
+
+  
+  
+</body>
+</html>
