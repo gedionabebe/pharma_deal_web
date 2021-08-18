@@ -8954,3 +8954,12 @@ venv/Lib/site-packages/asgiref/timeout.py
 venv/Lib/site-packages/asgiref/typing.py
 venv/Lib/site-packages/asgiref/wsgi.py
 venv/Lib/site-packages/asgiref/__pycache__/__init__.cpython-38.pyc
+pharma_deal_django/products/__pycache__/forms.cpython-39.pyc
+pharma_deal_django/products/__pycache__/forms.cpython-39.pyc
+pharma_deal_django/products/__pycache__/forms.cpython-39.pyc
+pharma_deal_django/products/__pycache__/urls.cpython-39.pyc
+pharma_deal_django/products/__pycache__/views.cpython-39.pyc
+*.pyc
+pharma_deal_django/products/__pycache__/forms.cpython-39.pyc
+pharma_deal_django/products/__pycache__/urls.cpython-39.pyc
+pharma_deal_django/products/__pycache__/views.cpython-39.pyc

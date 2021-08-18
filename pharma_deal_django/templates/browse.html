@@ -40,6 +40,18 @@ Homepage
     <input type="text" name="search">
     <input type="submit" value="Enter">
   </form>
+  <br>
+  <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
+    {% csrf_token %}
+    <label for="filter">Filter products</label>
+    <select id='filter' name ='filter'>
+      <option value="drug"> Drug</option>
+      <option value="accessories"> Accessories</option>
+      <option value="medical_equipment">Medical equipment</option>
+    </select>
+    
+    <input type="submit" value="Enter">
+  </form>
 
       <div class="row portfolio-container">
         {% for product in products.values %}

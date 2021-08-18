@@ -5,6 +5,7 @@ categories = [
     ('medical_equipment','Medical Equipment'),
     ('accessories','Accessories'),
 ]
+
 class ProductCreateForm(forms.Form):
     product_name = forms.CharField(label='Name')
     description = forms.CharField(label= 'Description', widget=forms.Textarea(attrs={"rows":5,"cols":20}))
@@ -15,3 +16,5 @@ class ProductCreateForm(forms.Form):
     expiry_date = forms.CharField(label= 'Expiry date')
     price = forms.CharField(label= 'Price')
     category = forms.CharField(label='Category', widget=forms.Select(choices=categories))
+class filterform(forms.Form):
+    filter_category = forms.CharField(label='Filter', widget=forms.Select(choices=categories))

@@ -1,3 +1,4 @@
+
 from django.shortcuts import redirect, render
 from authentication import firebase
 from .forms import ProductCreateForm
@@ -10,7 +11,8 @@ from pharma_deal_django.settings import BASE_DIR
 
 #pharmacies = firebase.database.child('Pharmacies').get().val()
 
-
+#global search_results
+search_results = []
 
 def browse(request):
 
@@ -157,6 +159,9 @@ def search(request):
         if search_input != None:
             search_input = str(search_input).split(' ')
             search_result = []
+            global search_results
+            search_results = search_result
+
             filters = ['is','the','a','an','is','was','were','and']
             no_reslut = 'Sorry no results found for your search'
             filtered_input = list(filter(lambda each: each not in filters, search_input))
@@ -182,6 +187,32 @@ def search(request):
     
     return redirect('/authentication/')
 
+def filters(request):
+    if request.session['status'] == 'logged_in':
+        no_reslut = 'Sorry no results found'
+        if request.POST.get('filter') :
+            print(request.POST['filter'])
+            
+            filter_parameters = request.POST['filter']
+            filtered_result = firebase.database.child('Products').order_by_child('category').equal_to('%s'%filter_parameters).get().val()
+            print(filtered_result)
+            return render(request, 'filtered_results.html', {'filtered_result':filtered_result, 'no_result':no_reslut})
+        elif request.POST.get('filter_search'):
+            filter_parameters = request.POST['filter_search']
+            filtered_results = []
+            print(search_results)
+            for items in search_results:
+                if items['category'] == filter_parameters:
+                    if items not in filtered_results:
+                        filtered_results.append(items)
+            print(filtered_results)
+            return render(request, 'filtered_results.html', {'filtered_results':filtered_results, 'no_result':no_reslut})
+
+
+
+
+
+    return redirect('/authentication/')
 
 
 

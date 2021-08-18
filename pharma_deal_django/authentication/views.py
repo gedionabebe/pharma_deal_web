@@ -33,7 +33,7 @@ def signup(request):
         #request.session['status'] = 'logged_in'
         #request.session['user_id'] = u_id
         session_set(request,u_id)
-        print(request.session['logged_in'],request.session['user_id'])
+        
 
 
         
