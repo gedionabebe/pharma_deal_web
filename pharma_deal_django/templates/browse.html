@@ -70,6 +70,19 @@ Homepage
               <p> Price: {{product.price}} </p>
               <p> Manufacturing date: {{product.manufacturing_date}} </p>
               <p> Expiry date: {{product.expiry_date}}</p>
+               <form action="{%url 'post_create'%}" method="POST">
+    {% csrf_token %} 
+    <input type="hidden" name="url" value="{{product.product_image}}">
+    <input type="hidden" name="medicine" value="{{product.product_name}}">
+    <input type="hidden" name="distributor" value="{{product.user_id}}">
+    
+    <input type="hidden" name="cost" value="{{product.price}}">
+    <input type="submit" value="Submit"> 
+
+    
+
+  </form>
+
 
             </div>
           </div>

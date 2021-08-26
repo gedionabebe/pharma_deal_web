@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+</head>
+<style>
+    div {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+
+    }
+</style>
+
+
+<body>
+    Welcome
+
+    <br>
+    <br>
+    <form action="{%url 'showpro'%}" method="POST">
+        {% csrf_token %} Image :
+        <br>
+        <img src="{{i}}" style="height:150px; border-radius: 50%; border: 10px solid #FEDE00;"> {% csrf_token %}
+
+
+        <br> Update Profile Picture :
+        <input type="file" name="files[]" id="files" required>
+        <input type="hidden" name="url" id="url">
+
+        <button type="button" onclick="uploadimage()" name="prof">Upload</button>
+        <br>
+        <br>
+
+        <input type="submit" value="Change" name="prof">
+        <br>
+        <br>
+        <button type="button" onclick="resetPassword()">Reset Password</button>
+
+
+    </form>
+    <br>
+    <br>
+
+
+
+
+
+
+</body>
+
+<script src="https://gstatic.com/firebasejs/3.7.4/firebase.js"> </script>
+
+<script>
+
+
+    var config = {
+
+        apiKey: "AIzaSyCfi5fRVCgXm-OQfgcs_qp08qxo8yWi5oo",
+        authDomain: "pharma-deal-38f66.firebaseapp.com",
+        databaseURL: "https://pharma-deal-38f66-default-rtdb.firebaseio.com",
+
+        storageBucket: "pharma-deal-38f66.appspot.com"
+
+
+    };
+    firebase.initializeApp(config)
+
+    function uploadimage() {
+        var storage = firebase.storage()
+        var file = document.getElementById("files").files[0];
+        var storageRef = storage.ref();
+        var thisref = storageRef.child(file.name).put(file);
+
+        thisref.on('state_changed', function (snapshot) {
+            console.log("file uploaded succesfully");
+        },
+            function (error) {
+
+            },
+
+            function () {
+                var downloadURL = thisref.snapshot.downloadURL;
+                console.log("got url");
+                document.getElementById("url").value = downloadURL;
+                alert("file uploaded succesfully");
+
+            });
+
+    }
+
+    function resetPassword() {
+
+        var auth = firebase.auth();
+        var emailAddress = prompt("Please enter your email", "email");
+        auth.sendPasswordResetEmail(emailAddress)
+            .then(function () {
+                // Email sent.
+            })
+            .catch(function (error) {
+                // An error happened.
+            });
+
+
+
+    }
+
+
+</script>
+
+
+
+
+</html>
