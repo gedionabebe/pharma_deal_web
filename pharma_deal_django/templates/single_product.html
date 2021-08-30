@@ -1,0 +1,15 @@
+              <p><img src="{{product.product_image}}" width="70" height="70"></p>
+              <p> Name: {{product.product_name}} </p>
+              <p>Description: {{product.description}} </p>
+              <p>Brand: {{product.brand}}</p>
+              <p>Manufacturing company: {{product.manufacturing_company}}</p>
+              <p>Form of preparation: {{product.form_of_preparation}}</p>
+              <p> Category: {{product.category}} </p>
+              <p> Price: {{product.price}} </p>
+              <p> Manufacturing date: {{product.manufacturing_date}} </p>
+              <p> Expiry date: {{product.expiry_date}}</p>
+
+              {% for review in reviews.values %}
+              <p> Rating: {{review.user_rating}}</p>
+              <p> Review: {{review.user_review}}</p>
+              {%endfor%}
