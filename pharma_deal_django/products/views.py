@@ -67,7 +67,10 @@ def update(request,product_id):
     if request.session['status'] == 'logged_in':
         #distributors = firebase.database.child('Distributors').get().val()
         if request.session['privilege'] == 'distributors':
+            print('user_id',request.POST.get('owner_id'))
             if request.session['user_id'] == request.POST.get('owner_id'):
+                
+                print("----===10000000000000001===-------")
                 products = firebase.database.child('Products').get()
                 single_product={}
                 for product in products.each():
@@ -126,7 +129,7 @@ def update(request,product_id):
                     firebase.database.child('Products').child('pro_00%d'%product_id).update(data)
                     return redirect('/products/inventory/')
                 return render(request, 'update.html', {'update_form':update_form, 'single_product':single_product})
-            return redirect('/produts/inventory')    
+            return redirect('/products/inventory')    
         return redirect('/products/browse')
     return redirect('/authentication/')
 def delete(request,product_id):
@@ -221,8 +224,9 @@ def filters(request):
 
 def single_product(request,product_id):
     if request.session['status'] == 'logged_in':
-        product = firebase.database.child('Products').order_by_child('product_id').equel_to('%s'%product_id).get().val()
-        reviews = firebase.datebase.child('review_and_ratings').order_by_child('product_id').equel_to('%s'%product_id).get().val()
+        product = firebase.database.child('Products').child('pro_00%s'%product_id).get().val()
+        reviews = firebase.database.child('reviews_and_ratings').order_by_child('product_id').equal_to('%s'%product_id).get().val()
+        print(product)
 
         return render(request,'single_product.html',{'product':product,'reviews':reviews})
     
