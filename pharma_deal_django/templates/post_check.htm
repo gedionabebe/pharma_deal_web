@@ -11,41 +11,33 @@
 
 
     Welcome {{e}}
+    <br> {% for lis_time,date,ph,me,co,img in comb_lis %} Date : {{date}} &nbsp; Request :
     <br>
-    <br> Date : {{d}}
-    <br> Pharmacy : {{p}}
-    <br> Medicine : {{m}}
-    <br> Cost : {{c}}
+    <br> Pharmacy : {{ph}}
+    <br> Medicine : {{me}}
+    <br> Cost : {{co}}
     <br> Image :
     <br>
-    <img src="{{i}}" width="50%" height="50%">
-
+    <img src="{{img}}" width="10%" height="10%">
     <br>
-
-
     <form action="{%url 'accept'%}" method="POST">
         {% csrf_token %}
-        <input type="text" id="acc" name="key">
+        <input type="hidden" name="lis_time" value="{{lis_time}}">
         <input type="submit" value="Accept">
-        <script>
-            document.getElementById('acc').value = "{{t}}"
-            document.getElementById("acc").style.display = "none"
-
-        </script>
     </form>
-
-
-
     <form action="{%url 'decline'%}" method="POST">
         {% csrf_token %}
-        <input type="text" id="dec" name="key">
+        <input type="hidden" name="lis_time" value="{{lis_time}}">
         <input type="submit" value="Decline">
-        <script>
-            document.getElementById('dec').value = "{{t}}"
-            document.getElementById("dec").style.display = "none"
-
-        </script>
     </form>
+
+    <br>
+    <br>
+    <br>{% endfor %}
+
+
+
+
 
 
 </body>

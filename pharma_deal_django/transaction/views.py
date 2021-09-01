@@ -18,6 +18,7 @@ def post_create(request):
     Medicine = request.POST.get('medicine')
     Distributor = request.POST.get('distributor')
     Pharmacy = request.session["user_id"]
+    product_id = request.POST.get('product_id') 
     Cost = request.POST.get('cost')
     url = request.POST.get('url')
     try:
@@ -27,21 +28,24 @@ def post_create(request):
             'medicine': Medicine,
             'distributor': Distributor,
             'pharmacy': Pharmacy,
+            'product_id': product_id,
             'cost': Cost,
             'status': "pending",
             'url' : url,
         }
         db.child('transaction').child(millis).set(data)
        
-        return render(request,"check.htm")
+        return render(request,"post_check.htm")
     except KeyError:
         message = "oops user is logged out"
         return render(request,"create.htm",{"mes":message})
 
-def check(request):
-    
+
+def post_check(request):
     import datetime
     
+    user_id = request.session['user_id']  
+
     timestamps = db.child('transaction').shallow().get().val()
     #shallow is used to get the key
     lis_time = []
@@ -49,46 +53,39 @@ def check(request):
         lis_time.append(i)
     lis_time.sort(reverse = False)
     print(lis_time)
-    req = []
+    ph = []
+    me = []
+    co = []
+    img = []
+    stat = []
     for i in lis_time:
-        pharma = db.child('transaction').child(i).child('pharmacy').get().val()
-        name = db.child('transaction').child(i).child('distributor').get().val()
-       
-        req.append(pharma)
-    print(req)
-    
+        pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
+        medicine = db.child('transaction').child(i).child('medicine').get().val()
+        cost = db.child('transaction').child(i).child('cost').get().val()
+        img_url = db.child('transaction').child(i).child('url').get().val()
+        status = db.child('transaction').child(i).child('status').get().val() 
+        Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
+        if status == 'pending' and user_id == Distributor_id:
+            ph.append(pharmacy)
+            me.append(medicine)
+            co.append(cost)
+            img.append(img_url)
+            stat.append(status)
+   
     date=[]
     for i in lis_time:
         i = float(i)
         dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
         date.append(dat)
     print(date)
-
-            #combined list
-    comb_lis = zip(lis_time,date,req)
-    # name = db.child('users').child(a).child('detail').child('name').get().val()
-
-    return render(request,"check.htm",{'comb_lis': comb_lis})
-
-def post_check(request):
-    import datetime
+    comb_lis = zip(lis_time,date,ph,me,co,img)
+    return render(request,"post_check.htm",{'comb_lis': comb_lis})
     
-    time = request.GET.get('z')
     
-    user_id = request.session['user_id']  
-
-    pharmacy = db.child('transaction').child(time).child('pharmacy').get().val()
-    medicine = db.child('transaction').child(time).child('medicine').get().val()
-    cost = db.child('transaction').child(time).child('cost').get().val()
-    img_url = db.child('transaction').child(time).child('url').get().val()
     
-    i = float(time)
-    dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
-
-    return render(request , 'post_check.htm', {'p': pharmacy,'m':medicine,'c':cost,'d': dat , 'i': img_url, 't':time})
 
 def accept(request):
-    key = request.POST.get('key')
+    key = request.POST.get('lis_time')
     
     print(key)
     
@@ -96,7 +93,7 @@ def accept(request):
     return render(request , 'post_check.htm')
 
 def decline(request):
-    key = request.POST.get('key')
+    key = request.POST.get('lis_time')
     
     print(key)
     db.child("transaction").child(key).update({'status':'declined'})
@@ -104,11 +101,11 @@ def decline(request):
 
 
 
-
-def cart(request):
-    
+def cart_check(request):
     import datetime
     
+    user_id = request.session['user_id']  
+
     timestamps = db.child('transaction').shallow().get().val()
     #shallow is used to get the key
     lis_time = []
@@ -116,41 +113,31 @@ def cart(request):
         lis_time.append(i)
     lis_time.sort(reverse = False)
     print(lis_time)
-    req = []
+    ph = []
+    me = []
+    co = []
+    img = []
+    stat = []
     for i in lis_time:
-        pharma = db.child('transaction').child(i).child('pharmacy').get().val()
-        name = db.child('transaction').child(i).child('distributor').get().val()
-       
-        req.append(pharma)
-    print(req)
-    
+        pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
+        medicine = db.child('transaction').child(i).child('medicine').get().val()
+        cost = db.child('transaction').child(i).child('cost').get().val()
+        img_url = db.child('transaction').child(i).child('url').get().val()
+        status = db.child('transaction').child(i).child('status').get().val() 
+        if pharmacy == user_id:
+            me.append(medicine)
+            co.append(cost)
+            img.append(img_url)
+            stat.append(status)
+   
     date=[]
     for i in lis_time:
         i = float(i)
         dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
         date.append(dat)
     print(date)
-
-            #combined list
-    comb_lis = zip(lis_time,date,req)
-    # name = db.child('users').child(a).child('detail').child('name').get().val()
-
-    return render(request,"cart.htm",{'comb_lis': comb_lis})
-
-def cart_check(request):
-    import datetime
+    comb_lis = zip(lis_time,date,me,co,img,stat)
+    return render(request,"cart_check.htm",{'comb_lis': comb_lis})
     
-    time = request.GET.get('z')
     
-    user_id = request.session['user_id']  
-
-    pharmacy = db.child('transaction').child(time).child('pharmacy').get().val()
-    medicine = db.child('transaction').child(time).child('medicine').get().val()
-    cost = db.child('transaction').child(time).child('cost').get().val()
-    img_url = db.child('transaction').child(time).child('url').get().val()
-    status = db.child('transaction').child(time).child('status').get().val()
     
-    i = float(time)
-    dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
-
-    return render(request , 'cart_check.htm', {'p': pharmacy,'m':medicine,'c':cost,'d': dat , 'i': img_url, 't':time,'s':status})

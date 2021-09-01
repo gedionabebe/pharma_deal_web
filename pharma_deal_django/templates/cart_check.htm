@@ -11,18 +11,17 @@
 
 
     Welcome {{e}}
+    <br> {% for time,date,me,co,img,stat in comb_lis %} Date : {{date}} &nbsp; Cart :
     <br>
-    <br> Date : {{d}}
-    <br> Pharmacy : {{p}}
-    <br> Medicine : {{m}}
-    <br> Cost : {{c}}
+    <br> Medicine : {{me}}
+    <br> Cost : {{co}}
     <br> Image :
     <br>
-    <img src="{{i}}" width="50%" height="50%">
-
+    <img src="{{img}}" width="10%" height="10%">
     <br>
-    <br> Status : {{s}}
-
+    <br> Status : {{stat}}
+    <br>
+    <br>{% endfor %}
 
 
 
