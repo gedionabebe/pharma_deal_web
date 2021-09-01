@@ -40,10 +40,12 @@ def signup(request):
         if type_user == 'distributor':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
             firebase.database.child('Distributors').child('%s'%u_id).set(data)
+            request.session['privilege'] = 'distributors'
             return redirect('/products/inventory')
         elif type_user == 'pharmacy':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
             firebase.database.child('Pharmacies').child('%s'%u_id).set(data)
+            request.session['privilege'] = 'pharmacies'
             return redirect('/products/browse')
             #return render(request, 'mine.html', {'user':user})
 
@@ -68,7 +70,8 @@ def login(request):
   distributors = firebase.database.child('Distributors').get().val()
   pharmacies = firebase.database.child('Pharmacies').get().val()
   request.session['status'] = 'logged_out'
-  request.session['user_id'] = '' 
+  request.session['user_id'] = ''
+  request.session['privilege'] = 'none'
   print(request.session['status'],request.session['user_id'])
 
 
@@ -86,10 +89,11 @@ def login(request):
       print(request.session['status'],request.session['user_id'])
       
       if u_id in distributors:
-
+        request.session['privilege'] = 'distributors'
         return redirect('/products/inventory')
 
       elif u_id in pharmacies:
+        request.session['privilege'] = 'pharmacies'
         return redirect('/products/browse')
         #return render(request, 'mine.html', {'user':user})
     except:

@@ -1,0 +1,22 @@
+<form action="{%url 'review_and_rate'%}" method='POST'>
+    {% csrf_token %}
+    <input type="hidden" name="pharam_id" value="{{pharam_id}}">
+    <input type="hidden" name="transaction_status" value="{{status}}">
+    <input type="hidden" name="product_id" value="{{product_id}}">
+    <input type="text" name="review_and_rate">
+
+    <input type='radio' id='rate_1' name='rating' value="1">
+    <label for='rate_1'>1</label>
+    <input type='radio' id='rate_2' name='rating' value="2">
+    <label for='rate_2'>2</label>
+    <input type='radio' id='rate_3' name='rating' value="3">
+    <label for='rate_3'>3</label>
+    <input type='radio' id='rate_4' name='rating' value="4">
+    <label for='rate_4'>4</label>
+    <input type='radio' id='rate_5' name='rating' value="5">
+    <label for='rate_5'>5</label>
+    
+        <input type="submit" name="submit" value="Enter">
+   
+    
+</form>

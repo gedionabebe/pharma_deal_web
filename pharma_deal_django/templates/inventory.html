@@ -61,9 +61,19 @@ Owner's Page
               <p> Price: {{product.price}} </p>
               <p> Manufacturing date: {{product.manufacturing_date}} </p>
               <p> Expiry date: {{product.expiry_date}}</p>
-              <a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a
+              <form action="{% url 'update' product.product_id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type='hidden' name = 'owner_id' value="{{product.user_id}}">
+                <input type="submit" name = 'submit' value="Update">
+              </form>
+              <form action="{% url 'delete' product.product_id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type='hidden' name = 'owner_id' value="{{product.user_id}}">
+                <input type="submit" name = 'submit' value="Delete">
+              </form>
+              <!--<a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a
                 href="{% url 'delete' product.product_id %}"><button type="button">Delete</button></a> <a><button
-                  type="button">Review</button></a>
+                  type="button">Review</button></a>-->
 
             </div>
           </div>

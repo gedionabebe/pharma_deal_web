@@ -57,8 +57,8 @@ Homepage
         {% for product in products.values %}
         <div class="col-lg-4 col-md-6 portfolio-item filter-app wow fadeInUp">
           <div class="portfolio-wrap">
-
-            <div class="portfolio-info" style="height:110px;">
+            <a href="{% url 'single_product' product.product_id %}">
+            <div  class="portfolio-info" style="height:110px;">
 
               <p><img src="{{product.product_image}}" width="70" height="70"></p>
               <p> Name: {{product.product_name}} </p>
@@ -86,6 +86,7 @@ Homepage
 
 
             </div>
+          </a>
           </div>
         </div>
         {% endfor %}
