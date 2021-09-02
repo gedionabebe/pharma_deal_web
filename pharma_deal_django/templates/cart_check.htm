@@ -1,31 +1,57 @@
 <!DOCTYPE html>
 <html>
-
+    <body > 
 <head>
 
 
 </head>
 
-<body>
+
 
 
 
     Welcome {{e}}
-    <br> {% for time,date,me,co,img,stat in comb_lis %} Date : {{date}} &nbsp; Cart :
+    <br> {% for time,date,me,co,img,stat,did,ph,pid in comb_lis %} Date : {{date}} &nbsp; 
+    
+    Cart :
     <br>
-    <br> Medicine : {{me}}
+    <div id="contents">
+        <br> Medicine : {{me}}
     <br> Cost : {{co}}
     <br> Image :
     <br>
     <img src="{{img}}" width="10%" height="10%">
     <br>
-    <br> Status : {{stat}}
+    <br> <p id="status">Status : {{stat}}</p>
     <br>
+    
+    </div>
+    {%if stat == 'accepted' %}
+    <form id="review_button"   action="{%url 'review_and_rate'%}" method="POST">
+        {% csrf_token %} 
+      
+        <input type="hidden" name="transaction_status" value="{{stat}}">
+        <input type="hidden" name="pharma_id" value="{{ph}}">
+        <input type="hidden" name="product_id" value="{{pid}}">
+        <input type="hidden" name="owner_name" value="{{stat}}">
+        <input type="hidden" name="product_name" value="{{me}}">
+        <input type="hidden" name="cost" value="{{co}}">
+        
+        
+        
+        
+        <input type="submit" value="Review" > 
+    
+        
+    
+      </form>
+    {%endif%}
+      
     <br>{% endfor %}
+    
 
 
 
 </body>
-
 
 </html>

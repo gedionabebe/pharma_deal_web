@@ -65,12 +65,12 @@ def post_check(request):
         img_url = db.child('transaction').child(i).child('url').get().val()
         status = db.child('transaction').child(i).child('status').get().val() 
         Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
-        if status == 'pending' and user_id == Distributor_id:
-            ph.append(pharmacy)
-            me.append(medicine)
-            co.append(cost)
-            img.append(img_url)
-            stat.append(status)
+        #if status == 'pending' and user_id == Distributor_id:
+        ph.append(pharmacy)
+        me.append(medicine)
+        co.append(cost)
+        img.append(img_url)
+        stat.append(status)
    
     date=[]
     for i in lis_time:
@@ -118,17 +118,24 @@ def cart_check(request):
     co = []
     img = []
     stat = []
+    did = []
+    pid = []
     for i in lis_time:
         pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
         medicine = db.child('transaction').child(i).child('medicine').get().val()
         cost = db.child('transaction').child(i).child('cost').get().val()
         img_url = db.child('transaction').child(i).child('url').get().val()
         status = db.child('transaction').child(i).child('status').get().val() 
+        Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
+        product_id = db.child('transaction').child(i).child('product_id').get().val()
         if pharmacy == user_id:
             me.append(medicine)
             co.append(cost)
             img.append(img_url)
             stat.append(status)
+            did.append(Distributor_id)
+            ph.append(pharmacy)
+            pid.append(product_id)
    
     date=[]
     for i in lis_time:
@@ -136,7 +143,7 @@ def cart_check(request):
         dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
         date.append(dat)
     print(date)
-    comb_lis = zip(lis_time,date,me,co,img,stat)
+    comb_lis = zip(lis_time,date,me,co,img,stat,did,ph,pid)
     return render(request,"cart_check.htm",{'comb_lis': comb_lis})
     
     
