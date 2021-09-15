@@ -1,47 +1,42 @@
+{% extends "base.html"%}
 <!DOCTYPE html>
 <html>
-
-<head>
-
-
-</head>
-
-<body>
-
-
-
-    Welcome {{e}}
-    <br> {% for lis_time,date,ph,me,co,img in comb_lis %} Date : {{date}} &nbsp; Request :
-    <br>
-    <br> Pharmacy : {{ph}}
-    <br> Medicine : {{me}}
-    <br> Cost : {{co}}
-    <br> li : {{lis_time}}
-    <br> Image :
-    <br>
-    <img src="{{img}}" width="10%" height="10%">
-    <br>
-    <form action="{%url 'accept'%}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="lis_time" value="{{lis_time}}">
-        <input type="submit" value="Accept">
-    </form>
-    <form action="{%url 'decline'%}" method="POST">
-        {% csrf_token %}
-        <input type="hidden" name="lis_time" value="{{lis_time}}">
-        <input type="submit" value="Decline">
-    </form>
-
-    <br>
-    <br>
-    <br>{% endfor %}
-
-
-
-
-
-
-</body>
-
-
+    {% block content %}
+        <body>
+            <div class="container-xl border p-3 my-3">
+                <div class="container p-3 my-3">
+                    <h1 class="h1">
+                        Welcome {{e}}
+                    </h1>
+                </div>
+                <br> 
+                <div class="row portfolio-container">  
+                    {% for lis_time,date,ph,me,co,img in comb_lis %} 
+                    <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
+                        <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+                            <img class = "card-img-top" src="{{img}}" style="height: 200px;">
+                            <div class="card-body">
+                                <p class="card-text">Medicine : {{me}}</p>
+                                <p class="card-text">Request :</p> 
+                                <p class="card-text">Pharmacy : {{ph}} </p>
+                                <p class="card-text">Cost : {{co}}</p>
+                                <button class="btn btn-outline-primary" type="submit" form="accept"><i class="fa fa-check" aria-hidden="true"></i>Accept</button>
+                                <button class="btn btn-outline-danger" type="submit" form="decline"><i class="fa fa-minus-square" aria-hidden="true"></i>Decline</button>
+                                <form action="{%url 'accept'%}" method="POST" id="accept">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="lis_time" value="{{lis_time}}"> 
+                                </form>
+                                <form action="{%url 'decline'%}" method="POST" id="decline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="lis_time" value="{{lis_time}}">
+                                </form>
+                                <p class="card-text">Request made at : {{date}} &nbsp;</p>         
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>    
+            </div>
+        </body>
+    {%endblock%}
 </html>

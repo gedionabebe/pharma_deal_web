@@ -1,25 +1,32 @@
-name:{{product_name}}
-price:{{cost}}
-<form action="{%url 'review_and_rate'%}" method='POST'>
-    {% csrf_token %}
-    <input type="hidden" name="pharma_id" value="{{pharma_id}}">
-    <input type="hidden" name="transaction_status" value="{{status}}">
-    <input type="hidden" name="product_id" value="{{product_id}}">
-    
-    <input type="text" name="review_and_rate">
-
-    <input type='radio' id='rate_1' name='rating' value="1">
-    <label for='rate_1'>1</label>
-    <input type='radio' id='rate_2' name='rating' value="2">
-    <label for='rate_2'>2</label>
-    <input type='radio' id='rate_3' name='rating' value="3">
-    <label for='rate_3'>3</label>
-    <input type='radio' id='rate_4' name='rating' value="4">
-    <label for='rate_4'>4</label>
-    <input type='radio' id='rate_5' name='rating' value="5">
-    <label for='rate_5'>5</label>
-    
+{%extends "base.html"%}
+{%block title%}
+    Rate {{product_name}}
+{%endblock%}
+{%block content%}
+    <br>
+    <br>
+    <br>
+    <p>name:{{product_name}}</p>
+    <p>price:{{cost}}</p>
+    <form action="{%url 'review_and_rate'%}" method='POST'>
+        {% csrf_token %}
+        <input type="hidden" name="pharma_id" value="{{pharma_id}}">
+        <input type="hidden" name="transaction_status" value="{{status}}">
+        <input type="hidden" name="product_id" value="{{product_id}}">
+        
+        <input type="text" name="review_and_rate">
+        
+        <input type='radio' id='rate_1' name='rating' value="1">
+        <label for='rate_1'>1</label>
+        <input type='radio' id='rate_2' name='rating' value="2">
+        <label for='rate_2'>2</label>
+        <input type='radio' id='rate_3' name='rating' value="3">
+        <label for='rate_3'>3</label>
+        <input type='radio' id='rate_4' name='rating' value="4">
+        <label for='rate_4'>4</label>
+        <input type='radio' id='rate_5' name='rating' value="5">
+        <label for='rate_5'>5</label>
+        
         <input type="submit" name="submit" value="Enter">
-   
-    
-</form>
+    </form>
+{%endblock%}
