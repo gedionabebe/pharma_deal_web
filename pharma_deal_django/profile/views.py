@@ -19,7 +19,7 @@ def showpro(request):
     for i in distributors:
         if i == user_id:
             #print ("distributor")
-            x = 'Distributor'
+            x = 'Distributors'
             print(x)
             
        
@@ -36,12 +36,14 @@ def showpro(request):
         print()
         
     img_url = firebase.database.child(x).child(user_id).child('url').get().val()
+    name = firebase.database.child(x).child(user_id).child('name').get().val()
+    
 
     
     
    
    
-    return render(request , 'profile.htm', {'i': img_url})
+    return render(request , 'profile.htm', {'i': img_url, 'n' : name })
 
     
     # message = "oops user is logged out"
