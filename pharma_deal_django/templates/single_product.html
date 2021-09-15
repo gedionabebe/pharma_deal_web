@@ -8,7 +8,9 @@
               <p> Price: {{product.price}} </p>
               <p> Manufacturing date: {{product.manufacturing_date}} </p>
               <p> Expiry date: {{product.expiry_date}}</p>
-
+              <br>
+              <h2>Reviews</h2>
+              <br>
               {% for review in reviews.values %}
               <p> Rating: {{review.user_rating}}</p>
               <p> Review: {{review.user_review}}</p>

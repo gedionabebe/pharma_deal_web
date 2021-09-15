@@ -110,44 +110,45 @@ def cart_check(request):
         
         user_id = request.session['user_id']  
 
-        timestamps = db.child('transaction').shallow().get().val()
-        #shallow is used to get the key
-        lis_time = []
-        for i in timestamps:
-            lis_time.append(i)
-        lis_time.sort(reverse = False)
-        print(lis_time)
-        ph = []
-        me = []
-        co = []
-        img = []
-        stat = []
-        did = []
-        for i in lis_time:
-            pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
-            medicine = db.child('transaction').child(i).child('medicine').get().val()
-            cost = db.child('transaction').child(i).child('cost').get().val()
-            img_url = db.child('transaction').child(i).child('url').get().val()
-            status = db.child('transaction').child(i).child('status').get().val()
-            Distributor_id = db.child('transaction').child(i).child('distributor').get().val() 
-            if pharmacy == user_id:
-                ph.append(pharmacy) #pharmacyid
-                me.append(medicine)
-                co.append(cost)
-                img.append(img_url)
-                stat.append(status)
-                did.append(Distributor_id)
-    
-        date=[]
-        for i in lis_time:
-            i = float(i)
-            dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
-            date.append(dat)
-        print(date)
-        comb_lis = zip(lis_time,date,ph,me,co,img,stat,did)
-        return render(request,"cart_check.htm",{'comb_lis': comb_lis})
-    else :
-        return render(request,"login.html")
+    timestamps = db.child('transaction').shallow().get().val()
+    #shallow is used to get the key
+    lis_time = []
+    for i in timestamps:
+        lis_time.append(i)
+    lis_time.sort(reverse = False)
+    print(lis_time)
+    ph = []
+    me = []
+    co = []
+    img = []
+    stat = []
+    did = []
+    pid = []
+    for i in lis_time:
+        pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
+        medicine = db.child('transaction').child(i).child('medicine').get().val()
+        cost = db.child('transaction').child(i).child('cost').get().val()
+        img_url = db.child('transaction').child(i).child('url').get().val()
+        status = db.child('transaction').child(i).child('status').get().val() 
+        Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
+        product_id = db.child('transaction').child(i).child('product_id').get().val()
+        if pharmacy == user_id:
+            me.append(medicine)
+            co.append(cost)
+            img.append(img_url)
+            stat.append(status)
+            did.append(Distributor_id)
+            ph.append(pharmacy)
+            pid.append(product_id)
+   
+    date=[]
+    for i in lis_time:
+        i = float(i)
+        dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
+        date.append(dat)
+    print(date)
+    comb_lis = zip(lis_time,date,me,co,img,stat,did,ph,pid)
+    return render(request,"cart_check.htm",{'comb_lis': comb_lis})
     
     
     
