@@ -10,7 +10,7 @@
         <div class="container-xl my-3">
             <div class="container p-3 my-3">
                 <h1 class="h1">
-                    Welcome {{e}}
+                    My Cart {{e}}
                 </h1>
             </div>
             <br> 
@@ -23,7 +23,14 @@
                                 <div id="contents">
                                     <p>Medicine : {{me}}</p>
                                     <p>Cost : {{co}}</p>
-                                    <p id="status">Status : {{stat}}</p>    
+                                    <p>Date : {{date}} &nbsp;</p>
+                                    {%if stat == 'pending' %}
+                                    <p id="status" style="color: yellow;">Status : Pending</p> 
+                                    {%elif stat == 'accepted' %}
+                                    <p id="status" style="color: blue;">Status : Accepted</p>
+                                    {%elif stat == 'declined' %}
+                                    <p id="status" style="color: red;">Status : Declined</p>
+                                    {%endif%}
                                 </div>
                                 {%if stat == 'accepted' %}
                                 <button class="btn btn-outline-info" type="submit" form="review_button"><i class="fa fa-star-o" aria-hidden="true"></i>  Review</button>
@@ -37,7 +44,7 @@
                                     <input type="hidden" name="cost" value="{{co}}">
                                 </form>
                                 {%endif%}
-                                <p>Date : {{date}} &nbsp;</p>     
+                                     
                                 <br>
                             </div>
                         </div>
