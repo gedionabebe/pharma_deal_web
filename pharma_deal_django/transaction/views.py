@@ -21,6 +21,7 @@ def post_create(request):
     product_id = request.POST.get('product_id') 
     Cost = request.POST.get('cost')
     url = request.POST.get('url')
+    
     try:
         user_id = request.session['user_id']  
 

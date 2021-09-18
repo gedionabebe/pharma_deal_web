@@ -1,5 +1,12 @@
-<!DOCTYPE html>
+{%extends 'base.html'%}
+{%block title%}
+   Filter Results
+{%endblock%}
+{%block content%}
 <html lang="en">
+<br>
+<br>
+<br>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,10 +14,7 @@
     <title>Document</title>
 </head>
 <body>
-  <h1> Filter results </h1>  
   
-  <a href="{%url 'login'%}">Logout</a>
-  <br>
   <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     <label for="search">Search</label>
@@ -35,8 +39,10 @@
 
   {% if filtered_result %}
    {% for search_result in filtered_result.values %}
-   <div>
-    <p><img src="{{search_result.product_image}}" width="70" height="70"></p>
+   
+   <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
+  <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) ">
+    <p><img class="card-img-top" src="{{search_result.product_image}}" style="height: 200px; width:200px;"></p>
     <p> Name: {{search_result.product_name}} </p>
     <p> Description: {{search_result.description}} </p>
     <p>Brand: {{search_result.brand}}</p>
@@ -46,14 +52,19 @@
     <p> Price: {{search_result.price}} </p>
     <p> Manufacturing date: {{search_result.manufacturing_date}} </p>
     <p> Expiry date: {{search_result.expiry_date}}</p>
-  
+     </div>
+    </div>
+</div>
 </div>
   <br>
   {% endfor %}
   {%else%}
   {% for search_result in filtered_results %}
-  <div>
-   <p><img src="{{search_result.product_image}}" width="70" height="70"></p>
+  <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
+  <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) ">
+   <p><img class="card-img-top" src="{{search_result.product_image}}" style="height: 200px; width:200px;"></p>
+   <div class="card-body"> 
+    <div id="contents">
    <p> Name: {{search_result.product_name}} </p>
    <p> Description: {{search_result.description}} </p>
    <p>Brand: {{search_result.brand}}</p>
@@ -63,7 +74,9 @@
    <p> Price: {{search_result.price}} </p>
    <p> Manufacturing date: {{search_result.manufacturing_date}} </p>
    <p> Expiry date: {{search_result.expiry_date}}</p>
- 
+   </div>
+    </div>
+</div>
 </div>
  <br>
  {% endfor %}
@@ -74,3 +87,4 @@
   
 </body>
 </html>
+{%endblock%}
