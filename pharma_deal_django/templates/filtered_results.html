@@ -4,9 +4,7 @@
 {%endblock%}
 {%block content%}
 <html lang="en">
-<br>
-<br>
-<br>
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,16 +12,19 @@
     <title>Document</title>
 </head>
 <body>
-  
+  <section id="portfolio" class="portfolio">
+    <div class="container" style="margin-top: 50px;">
+    <br>
   <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     <label for="search">Search</label>
     <input type="text" name="search">
     <input type="submit" value="Enter">
   </form>
-
-  <br>
-  <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
+</div>
+<br>
+ 
+  <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data" style"margin-top: 50px;">
     {% csrf_token %}
     <label for="filter">Filter products</label>
     <select id='filter' name ='filter'>
@@ -33,7 +34,7 @@
     </select>
     
     <input type="submit" value="Enter">
-  </form>
+  </form> 
 
   
 
@@ -75,7 +76,7 @@
    <p> Manufacturing date: {{search_result.manufacturing_date}} </p>
    <p> Expiry date: {{search_result.expiry_date}}</p>
    </div>
-    </div>
+   
 </div>
 </div>
  <br>
