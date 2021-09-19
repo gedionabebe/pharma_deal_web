@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-
-</head>
+{%extends 'base.html'%}
 <style>
     div {
         position: absolute;
@@ -14,7 +9,9 @@
 </style>
 
 
-<body>
+{%block content%}
+    <br>
+    <br>
     Welcome
 
     <br>
@@ -42,6 +39,7 @@
     </form>
     <br>
     <br>
+    {% endblock %}
 
 
 

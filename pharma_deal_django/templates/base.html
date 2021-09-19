@@ -27,10 +27,20 @@
                 <nav class="nav-menu d-none d-lg-block topndav" id="mydTopnav">
                     <ul style="color: white;">
                          </li>
-                        <li><a href="{%url 'inventory'%}" style="color: white;">Inventory</a></li>
-                        <li><a href="{%url 'browse'%}" style="color: white;">Products</a></li>
-                        <li><a href="{%url 'showpro'%}" style="color: white;">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
-                        <li><a href="{%url 'login'%}" style="color: white;">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
+                        {% if request.session.privilege == 'distributors'%}
+                            <li><a href="{%url 'inventory'%}" style="color: white;">Inventory  <i class="fa fa-plus-square" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'browse'%}" style="color: white;">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'showpro'%}" style="color: white;">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'create'%}" style="color: white;">Add Product  <i class="fa fa-cart-plus" aria-hidden="true"></i></a></li> 
+                            <li><a href="{%url 'post_check'%}" style="color: white;">Requests  <i class="fa fa-question-circle" aria-hidden="true"></i></i></a></li> 
+                            <li><a href="{%url 'login'%}" style="color: white;">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
+                        {% endif %}
+                        {% if request.session.privilege == 'pharmacies'%}
+                            <li><a href="{%url 'cart_check'%}" style="color: white;">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'browse'%}" style="color: white;">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'showpro'%}" style="color: white;">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                            <li><a href="{%url 'login'%}" style="color: white;">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
+                        {% endif %}
                         {% block nav %}{% endblock %}
                     </ul>
                 </nav><!-- .nav-menu -->
