@@ -1,5 +1,5 @@
 import pyrebase
-from django.shortcuts import redirect, render
+from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
 from authentication import firebase
@@ -21,6 +21,7 @@ def post_create(request):
     product_id = request.POST.get('product_id') 
     Cost = request.POST.get('cost')
     url = request.POST.get('url')
+    
     try:
         user_id = request.session['user_id']  
 
@@ -93,14 +94,14 @@ def accept(request):
     print(key)
     
     db.child("transaction").child(key).update({'status':'accepted'})
-    return render(request , 'post_check.htm')
+    return redirect('/transaction/post_check')
 
 def decline(request):
     key = request.POST.get('lis_time')
     
     print(key)
     db.child("transaction").child(key).update({'status':'declined'})
-    return render(request , 'post_check.htm')
+    return redirect('/transaction/post_check')
 
 
 
