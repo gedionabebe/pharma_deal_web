@@ -1,5 +1,5 @@
 import pyrebase
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from django.http import HttpResponse
 from authentication import firebase
@@ -35,7 +35,7 @@ def post_create(request):
         }
         db.child('transaction').child(millis).set(data)
        
-        return render(request,"post_check.htm")
+        return redirect('/transaction/cart_check')
     except KeyError:
         message = "oops user is logged out"
         return render(request,"create.htm",{"mes":message})
