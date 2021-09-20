@@ -1,5 +1,5 @@
 import pyrebase
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
 from authentication import firebase
@@ -36,7 +36,7 @@ def post_create(request):
         }
         db.child('transaction').child(millis).set(data)
        
-        return render(request,"post_check.htm")
+        return redirect('/transaction/cart_check')
     except KeyError:
         message = "oops user is logged out"
         return render(request,"create.htm",{"mes":message})
@@ -94,14 +94,14 @@ def accept(request):
     print(key)
     
     db.child("transaction").child(key).update({'status':'accepted'})
-    return render(request , 'post_check.htm')
+    return redirect('/transaction/post_check')
 
 def decline(request):
     key = request.POST.get('lis_time')
     
     print(key)
     db.child("transaction").child(key).update({'status':'declined'})
-    return render(request , 'post_check.htm')
+    return redirect('/transaction/post_check')
 
 
 
