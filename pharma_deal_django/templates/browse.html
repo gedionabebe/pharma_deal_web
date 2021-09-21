@@ -16,23 +16,48 @@
     <section id="portfolio" class="portfolio">
       <div class="container" style="margin-top: 50px;">
         <br>
-      <div id='search_bar'><form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
+      <div  id='search_bar' >
+        <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
         {% csrf_token %}
-        <label for="search">Search</label>
-        <input type="text" name="search">
-        <input type="submit" value="Enter">
-      </form></div>
+        <div class='input-group'>
+          <div class="form-outline">
+        <input type="text"  id="form1" placeholder="Search...." name="search" class="form-control">
+        
+      </div>
+      <span class="icon-input-btn">
+		
+    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
+		
+	</span>
+
+</div>
+      </form>
+    </div>
+    
         
         <br>
-        <div id='filter_bar'><form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
+        <div id='filter_bar' class='form-group'>
+          <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
           {% csrf_token %}
-          <label for="filter">Filter products</label>
-          <select id='filter' name ='filter'>
+          <div class='input-group'  style="width: 300px;">
+          
+          <select  class="form-control" name ='filter'>
             <option value="drug"> Drug</option>
             <option value="accessories"> Accessories</option>
             <option value="medical_equipment">Medical equipment</option>
           </select>
-          <input type="submit" value="Enter">
+          
+          
+		
+            <button type="submit" class="btn btn-primary" style="height: 40px;">
+              <label > Filter</label>
+              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
+                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
+              </svg>
+          </button> 
+            
+          
+        </div>
         </form></div>
         
         <div class="row portfolio-container">

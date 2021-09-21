@@ -34,16 +34,16 @@
                   <p> Price: {{product.price}} </p>
                   <p> Manufacturing date: {{product.manufacturing_date}} </p>
                   <p> Expiry date: {{product.expiry_date}}</p>
-                  <button class="btn btn-outline-primary" type="submit" form = "update_form"><i class="fa fa-wrench" aria-hidden="true"></i> Update</button>
-                  <button class="btn btn-outline-danger" type="submit" form = "delete_form"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
-                  <form action="{% url 'update' product.product_id %}" method="POST" enctype="multipart/form-data" id="update_form">
+                  <a href="{% url 'update' product.product_id %}?owner_id={{product.user_id}}"><button class="btn btn-outline-primary" type="submit" form = "update_form"><i class="fa fa-wrench" aria-hidden="true"></i> Update</button></a>
+                  <a href="{% url 'delete' product.product_id %}?owner_id={{product.user_id}}"><button class="btn btn-outline-danger" type="submit" form = "delete_form"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button></a>
+                  <!--<form action="{% url 'update' product.product_id %}" method="POST" enctype="multipart/form-data" id="update_form">
                     {% csrf_token %}
                     <input type='hidden' name = 'owner_id' value="{{product.user_id}}">
                   </form>
                   <form action="{% url 'delete' product.product_id %}" method="POST" enctype="multipart/form-data" id="delete_form">
                     {% csrf_token %} 
                     <input type='hidden' name = 'owner_id' value="{{product.user_id}}">
-                  </form> 
+                  </form> -->
                   <!--<a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a
                     href="{% url 'delete' product.product_id %}"><button type="button">Delete</button></a> <a><button type="button">Review</button></a>-->
                 </div>

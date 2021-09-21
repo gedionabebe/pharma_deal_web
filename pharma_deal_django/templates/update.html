@@ -11,18 +11,22 @@ Update
 <br>
 <br>
 <h1 style="position: relative; text-align: center;"> Update Product </h1>
-
-<img src="{{single_product.val.product_image}}" width="100" height="100" >
+<hr style='border-top: 3px dotted  rgb(41, 40, 40);width: 80%;'>
+<div class='update-page' style="font-weight: 500;position: relative; padding-left: 30%;width: 100%;">
+<img src="{{single_product.val.product_image}}" width="150" height="150"  style="margin-left: 10%;margin-bottom: 3%;">
 <form action="{%url 'update' single_product.val.product_id%}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
-    
-    <table style="color: rgb(194, 38, 38);padding-left: 10%;">{{update_form.as_table}}</table>
-    
+    <div class='form-group'>
+    {{update_form}}
+</div>
     <br>
     <input type='hidden' name = 'owner_id' value="{{single_product.val.user_id}}">
-    <label for='pro_image' style="font-weight: bold;">Change Image:</label>
-    <input type='file' name='pro_image' >
+    <label for='pro_image' class="form-label">Change Image:</label>
+    <input style='width:400px;' class='form-control' type='file' name='pro_image' >
     <br>
-    <input type="submit" value="Change">
+    <div class='form-group'>
+    <input class='btn btn-success' type="submit" value="Change">
+</div>
 </form>
+</div>
 {% endblock %}

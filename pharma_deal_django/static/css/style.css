@@ -123,6 +123,9 @@ h1, h2, h3, h4, h5, h6 {
   
 }
 
+.portfolio #create-page label{
+font-weight: bold;
+}
 .nav-menu > ul > li {
   position: relative;
   white-space: nowrap;
@@ -847,7 +850,8 @@ section {
 .portfolio #filter_bar{
   position: relative;
   left: 450px;
-  bottom: 45px;
+  margin-bottom: 90px;
+
 }
 
 /*--------------------------------------------------------------

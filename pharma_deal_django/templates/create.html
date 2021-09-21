@@ -5,22 +5,39 @@ Homepage
 {% endblock %}
 <br>
 {% block content %}
-<h1> Create a Product </h1>
-
 
 <br>
+<br>
+<br>
+<br>
 
-<form action="{%url 'create'%}" method='POST' enctype="multipart/form-data">
+<div id='create-page'>
+<h1 style="position: relative; text-align: center;"> Create a Product </h1>
+
+
+
+<hr style='border-top: 3px dotted  rgb(41, 40, 40);width: 80%;'>
+<form style="font-weight: 500;position: relative; padding-left: 30%;width: 100%;"action="{%url 'create'%}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
 
+<div class='form-group'>
+    {{create_form}}
 
-    <table>{{create_form.as_table}}</table>
-    <label for='category' style="font-weight: bold;">Choose a Category:</label>
+</div>
+    
+    
 
     <br>
-    <label for='pro_image' style="font-weight: bold;">Add Image:</label>
-    <input type='file' name='pro_image'>
+    
+    <label for='pro_image'  class="form-label">Add Image:</label>
+    
+    <input style='width:400px;' class='form-control' type='file' name='pro_image'>
+
     <br>
-    <input type="submit" value="Enter">
+    <div class='form-group'>
+    <input class='btn btn-success' type="submit" value="Enter">
+</div>
 </form>
+</div>
+
 {% endblock %}

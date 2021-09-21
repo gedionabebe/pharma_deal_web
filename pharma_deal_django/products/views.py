@@ -67,8 +67,8 @@ def update(request,product_id):
     if request.session['status'] == 'logged_in':
         #distributors = firebase.database.child('Distributors').get().val()
         if request.session['privilege'] == 'distributors':
-            print('user_id',request.POST.get('owner_id'))
-            if request.session['user_id'] == request.POST.get('owner_id'):
+            print('user_id',request.GET['owner_id'])
+            if request.session['user_id'] == request.GET['owner_id']:
                 
                 print("----===10000000000000001===-------")
                 products = firebase.database.child('Products').get()
@@ -162,6 +162,7 @@ def inventory(request):
 def search(request):
     if request.session['status'] == 'logged_in':
         search_input= request.POST['search']
+        s_input = search_input
         products = firebase.database.child('Products').get().val()
         if search_input != None:
             search_input = str(search_input).split(' ')
@@ -187,7 +188,7 @@ def search(request):
                                     search_result.append(product)
                             
             print(search_result)
-            return render(request, 'search_result.html', {'search_result':search_result, 'no_reslut':no_reslut})
+            return render(request, 'search_result.html', {'search_result':search_result, 'no_reslut':no_reslut,'input':s_input})
         return redirect('/products/browse')
 
 
@@ -201,11 +202,13 @@ def filters(request):
             print(request.POST['filter'])
             
             filter_parameters = request.POST['filter']
+            f_para = filter_parameters.replace('_',' ').capitalize()
             filtered_result = firebase.database.child('Products').order_by_child('category').equal_to('%s'%filter_parameters).get().val()
             print(filtered_result)
-            return render(request, 'filtered_results.html', {'filtered_result':filtered_result, 'no_result':no_reslut})
+            return render(request, 'filtered_results.html', {'filtered_result':filtered_result, 'no_result':no_reslut,'input':f_para})
         elif request.POST.get('filter_search'):
             filter_parameters = request.POST['filter_search']
+            f_para = filter_parameters.replace('_',' ').capitalize()
             filtered_results = []
             print(search_results)
             for items in search_results:
@@ -213,7 +216,7 @@ def filters(request):
                     if items not in filtered_results:
                         filtered_results.append(items)
             print(filtered_results)
-            return render(request, 'filtered_results.html', {'filtered_results':filtered_results, 'no_result':no_reslut})
+            return render(request, 'filtered_results.html', {'filtered_results':filtered_results, 'no_result':no_reslut,'input':f_para})
 
 
 
