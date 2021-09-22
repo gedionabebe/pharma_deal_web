@@ -15,7 +15,7 @@
             </div>
             <br> 
             <div class="row portfolio-container">
-                {% for time,date,me,co,img,stat,did,ph,pid in comb_lis %}
+                {% for time,date,me,co,img,stat,did,ph,pid,p_name in comb_lis %}
                     <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
                         <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                             <img class="card-img-top" src="{{img}}" style="height: 200px;">
@@ -33,7 +33,7 @@
                                     {%endif%}
                                 </div>
                                 {%if stat == 'accepted' %}
-                                <button class="btn btn-outline-info" type="submit" form="review_button"><i class="fa fa-star-o" aria-hidden="true"></i>  Review</button>
+                                
                                 <form id="review_button" action="{%url 'review_and_rate'%}" method="POST">
                                     {% csrf_token %}   
                                     <input type="hidden" name="transaction_status" value="{{stat}}">
@@ -42,6 +42,7 @@
                                     <input type="hidden" name="owner_name" value="{{stat}}">
                                     <input type="hidden" name="product_name" value="{{me}}">
                                     <input type="hidden" name="cost" value="{{co}}">
+                                    <button class="btn btn-outline-info" type="submit" ><i class="fa fa-star-o" aria-hidden="true"></i>  Review</button>
                                 </form>
                                 {%endif%}
                                      

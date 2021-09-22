@@ -845,13 +845,14 @@ section {
 }
 .portfolio #search_bar{
   position: relative;
-  
+  width: fit-content;
 }
+  
+
 .portfolio #filter_bar{
   position: relative;
   left: 450px;
-  margin-bottom: 90px;
-
+  bottom: 55px
 }
 
 /*--------------------------------------------------------------
