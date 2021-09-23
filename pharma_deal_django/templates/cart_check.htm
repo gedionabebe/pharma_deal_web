@@ -11,45 +11,70 @@
             </h1>
         </div>
         <br>
-        <div class="row portfolio-container">
-            {% for time,date,me,co,img,stat,did,ph,pid,p_name in comb_lis %}
-            <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-                <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                    <img class="card-img-top" src="{{img}}" style="height: 200px;">
-                    <div class="card-body">
-                        <div id="contents">
-                            <p>Medicine : {{me}}</p>
-                            <p>Cost : {{co}}</p>
-                            <p>Date : {{date}} &nbsp;</p>
-                            {%if stat == 'pending' %}
-                            <p id="status" style="color: green;">Status : Pending</p>
-                            {%elif stat == 'accepted' %}
-                            <p id="status" style="color: blue;">Status : Accepted</p>
-                            {%elif stat == 'declined' %}
-                            <p id="status" style="color: red;">Status : Declined</p>
+        <div class="container-xl my-3">
+            <div class="container p-3 my-3">
+                <h1 class="h1">
+                    My Cart {{e}}
+                </h1>
+            </div>
+            <br>
+            <div class="row portfolio-container">
+                {% for time,date,me,co,img,stat,did,ph,pid,p_name in comb_lis %}
+                <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
+                    <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+                        <img class="card-img-top" src="{{img}}" style="height: 200px;">
+                        <div class="card-body">
+                            <div id="contents">
+                                <p>Medicine : {{me}}</p>
+                                <p>Cost : {{co}}</p>
+                                <p>Date : {{date}} &nbsp;</p>
+                                {%if stat == 'pending' %}
+                                <p id="status" style="color: yellow;">Status : Pending</p>
+                                {%elif stat == 'accepted' %}
+                                <p id="status" style="color: blue;">Status : Accepted</p>
+                                {%elif stat == 'declined' %}
+                                <p id="status" style="color: red;">Status : Declined</p>
+                                {%endif%}
+                            </div>
+                            {%if stat == 'accepted' %}
+
+                            <form id="review_button" action="{%url 'review_and_rate'%}" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="transaction_status" value="{{stat}}">
+                                <input type="hidden" name="pharma_id" value="{{ph}}">
+                                <input type="hidden" name="product_id" value="{{pid}}">
+                                <input type="hidden" name="owner_name" value="{{stat}}">
+                                <input type="hidden" name="product_name" value="{{me}}">
+                                <input type="hidden" name="cost" value="{{co}}">
+                                <button class="btn btn-outline-info" type="submit">
+                                    <i class="fa fa-star-o" aria-hidden="true"></i> Review</button>
+                            </form>
                             {%endif%}
+
+                            <br>
                         </div>
-                        {%if stat == 'accepted' %}
-
-                        <form id="review_button" action="{%url 'review_and_rate'%}" method="POST">
-                            {% csrf_token %}
-                            <input type="hidden" name="transaction_status" value="{{stat}}">
-                            <input type="hidden" name="pharma_id" value="{{ph}}">
-                            <input type="hidden" name="product_id" value="{{pid}}">
-                            <input type="hidden" name="owner_name" value="{{stat}}">
-                            <input type="hidden" name="product_name" value="{{me}}">
-                            <input type="hidden" name="cost" value="{{co}}">
-                            <button class="btn btn-outline-info" type="submit">
-                                <i class="fa fa-star-o" aria-hidden="true"></i> Review</button>
-                        </form>
-                        {%endif%}
-
-                        <br>
                     </div>
+                    {%if stat == 'accepted' %}
+
+                    <form id="review_button" action="{%url 'review_and_rate'%}" method="POST">
+                        {% csrf_token %}
+                        <input type="hidden" name="transaction_status" value="{{stat}}">
+                        <input type="hidden" name="pharma_id" value="{{ph}}">
+                        <input type="hidden" name="product_id" value="{{pid}}">
+                        <input type="hidden" name="owner_name" value="{{stat}}">
+                        <input type="hidden" name="product_name" value="{{me}}">
+                        <input type="hidden" name="cost" value="{{co}}">
+                        <button class="btn btn-outline-info" type="submit">
+                            <i class="fa fa-star-o" aria-hidden="true"></i> Review</button>
+                    </form>
+                    {%endif%}
+
+                    <br>
                 </div>
             </div>
-            {% endfor %}
         </div>
+        {% endfor %}
+    </div>
     </div>
 </body>
 {%endblock%}
