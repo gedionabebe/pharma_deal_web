@@ -28,22 +28,22 @@ def showpro(request):
         if i == user_id:
             #print ("pharmacies")
             x = 'Pharmacies'
+            
             print (x)
 
 
     if 'prof' in request.POST:
         firebase.database.child(x).child(user_id).update({'url':url})
-        print()
+        
         
     img_url = firebase.database.child(x).child(user_id).child('url').get().val()
+    
     name = firebase.database.child(x).child(user_id).child('name').get().val()
+
+    privilage = x
     
 
-    
-    
-   
-   
-    return render(request , 'profile.htm', {'i': img_url, 'n' : name })
+    return render(request , 'profile.htm', {'i': img_url, 'n' : name , 'priv': privilage})
 
     
     # message = "oops user is logged out"

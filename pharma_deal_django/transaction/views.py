@@ -33,11 +33,12 @@ def post_create(request):
         data = {
             'medicine': Medicine,
             'distributor': Distributor,
-            'pharmacy': pn,
+            'pharmacy': Pharmacy,
             'product_id': product_id,
             'cost': Cost,
             'status': "pending",
             'url' : url,
+            'pharam_name':pn,
         }
         db.child('transaction').child(millis).set(data)
        
@@ -65,6 +66,7 @@ def post_check(request):
         co = []
         img = []
         stat = []
+        p_name= []
         for i in lis_time:
             pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
             medicine = db.child('transaction').child(i).child('medicine').get().val()
@@ -72,6 +74,7 @@ def post_check(request):
             img_url = db.child('transaction').child(i).child('url').get().val()
             status = db.child('transaction').child(i).child('status').get().val() 
             Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
+            pharma_name = db.child('transaction').child(i).child('pharam_name').get().val()
             # if status == 'pending' and user_id == Distributor_id:
             if user_id == Distributor_id:
                 ph.append(pharmacy)
@@ -79,6 +82,7 @@ def post_check(request):
                 co.append(cost)
                 img.append(img_url)
                 stat.append(status)
+                p_name.append(pharma_name)
     
         date=[]
         for i in lis_time:
@@ -86,7 +90,7 @@ def post_check(request):
             dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
             date.append(dat)
         print(date)
-        comb_lis = zip(lis_time,date,ph,me,co,img)
+        comb_lis = zip(lis_time,date,ph,me,co,img,p_name,stat)
         return render(request,"post_check.htm",{'comb_lis': comb_lis})
     else :
         return render(request,"login.html")
@@ -130,6 +134,7 @@ def cart_check(request):
         stat = []
         did = []
         pid = []
+        p_name= []
         for i in lis_time:
             pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
             medicine = db.child('transaction').child(i).child('medicine').get().val()
@@ -138,6 +143,7 @@ def cart_check(request):
             status = db.child('transaction').child(i).child('status').get().val() 
             Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
             product_id = db.child('transaction').child(i).child('product_id').get().val()
+            pharma_name = db.child('transaction').child(i).child('pharam_name').get().val()
             if pharmacy == user_id:
                 me.append(medicine)
                 co.append(cost)
@@ -146,6 +152,7 @@ def cart_check(request):
                 did.append(Distributor_id)
                 ph.append(pharmacy)
                 pid.append(product_id)
+                p_name.append(pharma_name)
     
         date=[]
         for i in lis_time:
@@ -153,7 +160,8 @@ def cart_check(request):
             dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
             date.append(dat)
         print(date)
-        comb_lis = zip(lis_time,date,me,co,img,stat,did,ph,pid)
+        comb_lis = zip(lis_time,date,me,co,img,stat,did,ph,pid,p_name)
+        print('items:--' ,comb_lis)
         return render(request,"cart_check.htm",{'comb_lis': comb_lis})
     else :
         return render(request,"login.html")

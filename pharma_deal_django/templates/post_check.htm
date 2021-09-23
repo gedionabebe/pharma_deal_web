@@ -1,43 +1,56 @@
 {% extends "base.html"%}
 <!DOCTYPE html>
 <html>
-    {% block content %}
-        <body>
-            <div class="container-xl border p-3 my-3">
-                <div class="container p-3 my-3">
-                    <h1 class="h1">
-                        Requests {{e}}
-                    </h1>
-                </div>
-                <br> 
-                <div class="row portfolio-container">  
-                    {% for lis_time,date,ph,me,co,img in comb_lis %} 
-                    <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-                        <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                            <img class = "card-img-top" src="{{img}}" style="height: 200px;">
-                            <div class="card-body">
-                                <p class="card-text">Medicine : {{me}}</p>
-                                
-                                <p class="card-text">Pharmacy : {{ph}} </p>
-                                <p class="card-text">Cost : {{co}}</p>
-                                <p class="card-text">Request made at : {{date}} &nbsp;</p>
-                                <button class="btn btn-outline-primary" type="submit" form="accept"><i class="fa fa-check" aria-hidden="true"></i>Accept</button>
-                                <button class="btn btn-outline-danger" type="submit" form="decline"><i class="fa fa-minus-square" aria-hidden="true"></i>Decline</button>
-                                <form action="{%url 'accept'%}" method="POST" id="accept">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="lis_time" value="{{lis_time}}"> 
-                                </form>
-                                <form action="{%url 'decline'%}" method="POST" id="decline">
-                                    {% csrf_token %}
-                                    <input type="hidden" name="lis_time" value="{{lis_time}}">
-                                </form>
-                                         
-                            </div>
-                        </div>
+{% block content %}
+
+<body>
+    <div class="container-xl border p-3 my-3">
+        <div class="container p-3 my-3">
+            <h1 class="h1">
+                Requests {{e}}
+            </h1>
+        </div>
+        <br>
+        <div class="row portfolio-container">
+            {% for lis_time,date,ph,me,co,img,p_name,stat in comb_lis %}
+            <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
+                <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+                    <img class="card-img-top" src="{{img}}" style="height: 200px;">
+                    <div class="card-body">
+                        <p class="card-text">Medicine : {{me}}</p>
+
+                        <p class="card-text">Pharmacy : {{p_name}} </p>
+                        <p class="card-text">Cost : {{co}}</p>
+                        <p class="card-text">Request made at : {{date}} &nbsp;</p>
+                        {%if stat == 'pending' %}
+                        <p id="status" style="color: yellow;">Status : Pending</p>
+                        {%elif stat == 'accepted' %}
+                        <p id="status" style="color: blue;">Status : Accepted</p>
+                        {%elif stat == 'declined' %}
+                        <p id="status" style="color: red;">Status : Declined</p>
+                        {%endif%}
+
+
+                        <form action="{%url 'accept'%}" method="POST" id="accept">
+                            {% csrf_token %}
+                            <input type="hidden" name="lis_time" value="{{lis_time}}">
+                            <button class="btn btn-outline-primary" type="submit">
+                                <i class="fa fa-check" aria-hidden="true"></i>Accept</button>
+                        </form>
+                        <form action="{%url 'decline'%}" method="POST" id="decline">
+                            {% csrf_token %}
+                            <input type="hidden" name="lis_time" value="{{lis_time}}">
+                            <button class="btn btn-outline-danger" type="submit">
+                                <i class="fa fa-minus-square" aria-hidden="true"></i>Decline</button>
+                        </form>
+
                     </div>
-                    {% endfor %}
-                </div>    
+                </div>
             </div>
-        </body>
-    {%endblock%}
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{%endblock%}
+
 </html>
