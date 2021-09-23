@@ -27,8 +27,30 @@
             {% for review in reviews.values %}
             <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                 <div class="card-body">
-                    <p> Rating: {{review.user_rating}}</p>
-                    <p> Review: {{review.user_review}}</p>
+                    <p style="font-size: 25px; font-weight: 400;">By:  {{review.user_name}}</p>
+                    {% if review.user_rating == '1' %}
+                    <span>&#11088;</span>
+                    {%elif review.user_rating == 2%}
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    {%elif review.user_rating == '3'%}
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    {%elif review.user_rating == '4'%}
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    {%elif review.user_rating == '5'%}
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    <span>&#11088;</span>
+                    {%endif%}
+                    <br>
+                    <p style="font-size: 20px; font-weight: 300px; padding-top: 8px;">  {{review.user_review}}</p>
                 </div>
             </div>
             {%endfor%}

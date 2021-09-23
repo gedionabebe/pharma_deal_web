@@ -34,7 +34,7 @@
                                 </div>
                                 {%if stat == 'accepted' %}
                                 
-                                <form id="review_button" action="{%url 'review_and_rate'%}" method="POST">
+                                <form id="review_button" action="{%url 'review_and_rate'%}?url={{img | urlencode}}" method="POST">
                                     {% csrf_token %}   
                                     <input type="hidden" name="transaction_status" value="{{stat}}">
                                     <input type="hidden" name="pharma_id" value="{{ph}}">

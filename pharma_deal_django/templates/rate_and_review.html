@@ -3,13 +3,16 @@
     Rate {{product_name}}
 {%endblock%}
 {%block content%}
-    <br>
-    <br>
-    <br>
-    <div style='position: relative;left: 40%;'>
-    <p>name:{{product_name}}</p>
-    <p>price:{{cost}}</p>
-
+<section id="portfolio" class="portfolio">
+  <div class="container" style="margin-top: 50px;">
+    
+    <h1 style="text-align: center;padding-bottom: 50px;">Leave a review</h1>
+    <div style='position: relative;left: 20%;'>
+    <img style="left:10%; height:150px;width: 150px;padding-right: 2px;" src="{{img_url}}">
+    <div style="font-weight: 600;font-size: 18px; position: relative; left: 17%; bottom: 150px;">
+    <p>Product name:  {{product_name}}</p>
+    <p>Price:  {{cost}}</p>
+  </div>
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
         div.stars{
@@ -83,28 +86,45 @@
         }
         </style>
 
-    <div class="stars">
-        <form action="{%url 'review_and_rate'%}" method='POST'>
+ <div class='form-group'>
+        <form action="{%url 'review_and_rate'%}?url={{img_url | urlencode}}" method='POST'>
             {% csrf_token %}
          <input type="hidden" name="pharma_id" value="{{pharma_id}}">
         <input type="hidden" name="transaction_status" value="{{status}}">
         <input type="hidden" name="product_id" value="{{product_id}}">
-
-          <input class="star star-5" id="star-5" type="radio" name='rating' value="5"/>
-          <label class="star star-5" for="star-5"></label>
-          <input class="star star-4" id="star-4" type="radio" name='rating' value="4"/>
-          <label class="star star-4" for="star-4"></label>
-          <input class="star star-3" id="star-3" type="radio" name='rating' value="3"/>
-          <label class="star star-3" for="star-3"></label>
-          <input class="star star-2" id="star-2" type="radio" name='rating' value="2"/>
-          <label class="star star-2" for="star-2"></label>
-          <input class="star star-1" id="star-1" type="radio" name='rating' value="1"/>
-          <label class="star star-1" for="star-1"></label>
-          <input type="text" style='height:80px;width:280px;align-content: center;' name="review_and_rate">
-          <input type="submit" name="submit" value="Review">
+        <label class="form-label">Name</label>
+        <input type="text" placeholder="Please enter your name" class='form-control' name="user_name" style="width: 300px;">
+          
+          
+        <br>
+          <label class="form-label">Review</label>
+          <textarea name="review_and_rate" placeholder="Please enter feedback" class='form-control' rows="5" style="width: 380px;"></textarea>
+         <!-- <input type="text" style='height:80px;width:280px;align-content: center;' name="review_and_rate">-->
+         <br>
+         
+         <label class='form-label' for='rating'>Rating</label>
+         <br>
+         <div class="stars">
+           <input class="star star-5" id="star-5" type="radio" name='rating' value="5"/>
+           <label class="star star-5" for="star-5"></label>
+           <input class="star star-4" id="star-4" type="radio" name='rating' value="4"/>
+           <label class="star star-4" for="star-4"></label>
+           <input class="star star-3" id="star-3" type="radio" name='rating' value="3"/>
+           <label class="star star-3" for="star-3"></label>
+           <input class="star star-2" id="star-2" type="radio" name='rating' value="2"/>
+           <label class="star star-2" for="star-2"></label>
+           <input class="star star-1" id="star-1" type="radio" name='rating' value="1"/>
+           <label class="star star-1" for="star-1"></label>
+         </div>
+         <br>
+          <input class='btn btn-success' type="submit" name="submit" value="Review">
+        
         </form>
-        </div>
+ </div>
+        
     </div>
+  </div>
+</section>
     <!--
     <form action="{%url 'review_and_rate'%}" method='POST'>
         {% csrf_token %}

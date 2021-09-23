@@ -77,7 +77,7 @@
                   <p>Price: {{product.price}} </p>
                   <p>Manufacturing date: {{product.manufacturing_date}} </p>
                   <p>Expiry date: {{product.expiry_date}}</p>
-                  
+                  {% if request.session.privilege == 'pharmacies'%}
                   <form action="{%url 'post_create'%}" method="POST" id="Addtocart">
                     {% csrf_token %} 
                     <input type="hidden" name="url" value="{{product.product_image}}">
@@ -87,6 +87,7 @@
                     <input type="hidden" name="cost" value="{{product.price}}">
                     <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
                   </form>
+                  {%endif%}
                 </div>        
               </div>
             </div>
