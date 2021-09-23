@@ -1,44 +1,146 @@
 {%extends 'base.html'%}
 <style>
-    div {
-        position: absolute;
-        right: 10px;
-        top: 5px;
+    * {
+        margin: 0;
+        padding: 0
+    }
 
+    body {
+        background-color: #000
+    }
+
+    .card {
+        width: 350px;
+        background-color: #efefef;
+        border: none;
+        cursor: pointer;
+        transition: all 0.5s
+    }
+
+    .image img {
+        transition: all 0.5s
+    }
+
+    .card:hover .image img {
+        transform: scale(1.5)
+    }
+
+    .btn {
+        height: 140px;
+        width: 140px;
+        border-radius: 50%
+    }
+
+    .name {
+        font-size: 22px;
+        font-weight: bold
+    }
+
+    .idd {
+        font-size: 14px;
+        font-weight: 600
+    }
+
+    .idd1 {
+        font-size: 12px
+    }
+
+    .number {
+        font-size: 22px;
+        font-weight: bold
+    }
+
+    .follow {
+        font-size: 12px;
+        font-weight: 500;
+        color: #444444
+    }
+
+    .btn1 {
+        height: 40px;
+        width: 150px;
+        border: none;
+        background-color: #000;
+        color: #aeaeae;
+        font-size: 15px
+    }
+
+    .text span {
+        font-size: 13px;
+        color: #545454;
+        font-weight: 500
+    }
+
+    .icons i {
+        font-size: 19px
+    }
+
+    hr .new1 {
+        border: 1px solid
+    }
+
+    .join {
+        font-size: 14px;
+        color: #a0a0a0;
+        font-weight: bold
+    }
+
+    .date {
+        background-color: #ccc
     }
 </style>
 
-
 {%block content%}
 <br>
-<br> Welcome
-
+<br>
 <br>
 <br>
 <form action="{%url 'showpro'%}" method="POST">
-    {% csrf_token %} Name : {{n}}
-    <br> Account : {{priv}}
-    <br>
-    <img src="{{i}}" style="height:150px; border-radius: 50%; border: 10px solid #FEDE00;"> {% csrf_token %}
+    {% csrf_token %}
+    <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
+
+        <div class="card p-4 my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); background-color: #aeaeae;">
+            <div class=" image d-flex flex-column justify-content-center align-items-center">
+                <button class="btn btn-secondary">
+                    <img src="{{i}}" height="200" width="200" />
+                </button>
+                {% csrf_token %}
+
+                <span class="name mt-3" style="background-color : white;">
+                    <h4>
+                        <b>Name :{{n}}</b>
+                    </h4>
+                </span>
+                <span class="idd" style="background-color : white;">
+                    <h4>
+                        <b>Account:{{priv}}</b>
+                    </h4>
+                </span>
+                <div class=" d-flex mt-2">
+                    <input type="file" name="files[]" id="files" required>
+                    <input type="hidden" name="url" id="url">
+                    <button class="btn1 btn-dark" type="button" onclick="uploadimage()" name="prof">
+                        <i class="fa fa-upload" aria-hidden="true"></i> Upload</button>
+                    <br>
+
+                    <input class="btn1 btn-dark" type="submit" value="Change" name="prof"> &#160;&#160;
+                </div>
+                <div class=" d-flex mt-2">
 
 
-    <br> Update Profile Picture :
-    <input type="file" name="files[]" id="files" required>
-    <input type="hidden" name="url" id="url">
 
-    <button type="button" onclick="uploadimage()" name="prof">Upload</button>
-    <br>
-    <br>
+                </div>
+                <div class=" d-flex mt-2">
+                    <button class="btn1 btn-dark" type="button" onclick="resetPassword()">Reset Password</button>
+                    <br>
+                    <br>
 
-    <input type="submit" value="Change" name="prof">
-    <br>
-    <br>
-    <button type="button" onclick="resetPassword()">Reset Password</button>
-
-
+                </div>
+            </div>
+        </div>
 </form>
 <br>
-
+<br>
 
 
 
@@ -104,9 +206,6 @@
     }
 
 
-</script>
-
-<br> {% endblock %}
-
+</script> {% endblock %}
 
 </html>
