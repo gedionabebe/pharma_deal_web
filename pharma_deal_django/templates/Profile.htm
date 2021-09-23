@@ -10,36 +10,35 @@
 
 
 {%block content%}
+<br>
+<br> Welcome
+
+<br>
+<br>
+<form action="{%url 'showpro'%}" method="POST">
+    {% csrf_token %} Name : {{n}}
+    <br> Account : {{priv}}
+    <br>
+    <img src="{{i}}" style="height:150px; border-radius: 50%; border: 10px solid #FEDE00;"> {% csrf_token %}
+
+
+    <br> Update Profile Picture :
+    <input type="file" name="files[]" id="files" required>
+    <input type="hidden" name="url" id="url">
+
+    <button type="button" onclick="uploadimage()" name="prof">Upload</button>
     <br>
     <br>
-    Welcome
 
+    <input type="submit" value="Change" name="prof">
     <br>
     <br>
-    <form action="{%url 'showpro'%}" method="POST">
-        {% csrf_token %} Image :
-        <br>
-        <img src="{{i}}" style="height:150px; border-radius: 50%; border: 1px solid #FEDE00;"> {% csrf_token %}
+    <button type="button" onclick="resetPassword()">Reset Password</button>
 
 
-        <br> Update Profile Picture :
-        <input type="file" name="files[]" id="files" required>
-        <input type="hidden" name="url" id="url">
+</form>
+<br>
 
-        <button type="button" onclick="uploadimage()" name="prof">Upload</button>
-        <br>
-        <br>
-
-        <input type="submit" value="Change" name="prof">
-        <br>
-        <br>
-        <button type="button" onclick="resetPassword()">Reset Password</button>
-
-
-    </form>
-    <br>
-    <br>
-    {% endblock %}
 
 
 
@@ -107,7 +106,7 @@
 
 </script>
 
-
+<br> {% endblock %}
 
 
 </html>
