@@ -12,13 +12,13 @@
         </div>
         <br>
         <div class="row portfolio-container">
-            {% for lis_time,date,ph,me,co,img,p_name,stat in comb_lis %}
+            {% for lis_time,date,ph,me,co,img,p_name,stat,p_info in comb_lis %}
             <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
                 <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                     <img class="card-img-top" src="{{img}}" style="height: 200px;">
                     <div class="card-body">
                         <p class="card-text">Medicine : {{me}}</p>
-
+                        <p class="card-text">Pharmacy's phone number : {{p_info}}</p>
                         <p class="card-text">Pharmacy : {{p_name}} </p>
                         <p class="card-text">Cost : {{co}}</p>
                         <p class="card-text">Request made at : {{date}} &nbsp;</p>

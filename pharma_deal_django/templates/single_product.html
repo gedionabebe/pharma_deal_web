@@ -7,7 +7,7 @@
     <div class="row portfolio-container">
         <div class="col-lg-6 col-md-8 mx-auto filter-app wow fadeInUp">
             <div class=" card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                <img class="card-img-top" src="{{product.product_image}}" style="height:200px;" >
+                <img class="card-img-top" src="{{product.product_image}}" style="height:200px;width: 200px;align-self: center;" >
                 <div class="card-body"> 
                     <p>Name: {{product.product_name}} </p>
                     <p>Description: {{product.description}} </p>
@@ -19,6 +19,17 @@
                     <p>Manufacturing date: {{product.manufacturing_date}} </p>
                     <p>Expiry date: {{product.expiry_date}}</p>
                     <br>
+                    {% if request.session.privilege == 'pharmacies'%}
+                  <form action="{%url 'post_create'%}" method="POST" id="Addtocart">
+                    {% csrf_token %} 
+                    <input type="hidden" name="url" value="{{product.product_image}}">
+                    <input type="hidden" name="medicine" value="{{product.product_name}}">
+                    <input type="hidden" name="distributor" value="{{product.user_id}}">
+                    <input type="hidden" name="product_id" value="{{product.product_id}}">      
+                    <input type="hidden" name="cost" value="{{product.price}}">
+                    <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
+                  </form>
+                  {%endif%}
                 </div>
             </div>
             <br>

@@ -69,14 +69,18 @@
                 </a>
                 <div class="card-body">
                   <p>Name: {{product.product_name}} </p>
-                  <p>Description: {{product.description}} </p>
+                  <!--
+                  <p>Description: {{product.description}} </p>-->
                   <p>Brand: {{product.brand}}</p>
-                  <p>Manufacturing company: {{product.manufacturing_company}}</p>
-                  <p>Form of preparation: {{product.form_of_preparation}}</p>
-                  <p>Category: {{product.category}} </p>
+                  
+                 <!-- <p>Manufacturing company: {{product.manufacturing_company}}</p>-->
+                 <!-- <p>Form of preparation: {{product.form_of_preparation}}</p>-->
+                  <p>Category: {{product.category.capitalize}} </p>
                   <p>Price: {{product.price}} </p>
-                  <p>Manufacturing date: {{product.manufacturing_date}} </p>
+                  <!--
+                    <p>Manufacturing date: {{product.manufacturing_date}} </p>
                   <p>Expiry date: {{product.expiry_date}}</p>
+                  -->
                   {% if request.session.privilege == 'pharmacies'%}
                   <form action="{%url 'post_create'%}" method="POST" id="Addtocart">
                     {% csrf_token %} 

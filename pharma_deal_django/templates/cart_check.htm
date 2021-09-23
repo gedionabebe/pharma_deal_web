@@ -15,13 +15,14 @@
             </div>
             <br> 
             <div class="row portfolio-container">
-                {% for time,date,me,co,img,stat,did,ph,pid,p_name in comb_lis %}
+                {% for time,date,me,co,img,stat,did,ph,pid,p_name,dist_info in comb_lis %}
                     <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
                         <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
                             <img class="card-img-top" src="{{img}}" style="height: 200px;">
                             <div class="card-body">                       
                                 <div id="contents">
                                     <p>Medicine : {{me}}</p>
+                                    <p>Distributor's phone number: {{dist_info}}</p>
                                     <p>Cost : {{co}}</p>
                                     <p>Date : {{date}} &nbsp;</p>
                                     {%if stat == 'pending' %}

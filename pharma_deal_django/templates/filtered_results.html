@@ -94,16 +94,33 @@
    
    <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
   <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) ">
+    <a href="{% url 'single_product' search_result.product_id %}">
     <p><img class="card-img-top" src="{{search_result.product_image}}" style="height: 200px; width:200px;"></p>
+  </a>
+  <div class="card-body" > 
+    <div id="contents">
     <p> Name: {{search_result.product_name}} </p>
-    <p> Description: {{search_result.description}} </p>
+    <!--<p> Description: {{search_result.description}} </p>-->
     <p>Brand: {{search_result.brand}}</p>
-    <p>Manufacturing company: {{search_result.manufacturing_company}}</p>
-    <p>Form of preparation: {{search_result.form_of_preparation}}</p>
-    <p> Category: {{search_result.category}} </p>
+   <!-- <p>Manufacturing company: {{search_result.manufacturing_company}}</p>
+    <p>Form of preparation: {{search_result.form_of_preparation}}</p>-->
+    <p> Category: {{search_result.category.capitalize}} </p>
     <p> Price: {{search_result.price}} </p>
-    <p> Manufacturing date: {{search_result.manufacturing_date}} </p>
-    <p> Expiry date: {{search_result.expiry_date}}</p>
+    <!--<p> Manufacturing date: {{search_result.manufacturing_date}} </p>
+    <p> Expiry date: {{search_result.expiry_date}}</p>-->
+    {% if request.session.privilege == 'pharmacies'%}
+                  <form action="{%url 'post_create'%}" method="POST" id="Addtocart">
+                    {% csrf_token %} 
+                    <input type="hidden" name="url" value="{{search_result.product_image}}">
+                    <input type="hidden" name="medicine" value="{{search_result.product_name}}">
+                    <input type="hidden" name="distributor" value="{{search_result.user_id}}">
+                    <input type="hidden" name="product_id" value="{{search_result.product_id}}">      
+                    <input type="hidden" name="cost" value="{{search_result.price}}">
+                    <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
+                  </form>
+                  {%endif%}
+    </div>
+  </div>
      </div>
     </div>
 </div>
