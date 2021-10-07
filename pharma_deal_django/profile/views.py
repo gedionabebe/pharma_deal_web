@@ -43,7 +43,7 @@ def showpro(request):
     privilage = x
     
 
-    return render(request , 'profile.htm', {'i': img_url, 'n' : name , 'priv': privilage})
+    return render(request , 'Profile.htm', {'i': img_url, 'n' : name , 'priv': privilage})
 
     
     # message = "oops user is logged out"
