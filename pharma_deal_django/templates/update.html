@@ -14,7 +14,7 @@ Update
 <hr style='border-top: 3px dotted  rgb(41, 40, 40);width: 80%;'>
 <div class='update-page' style="font-weight: 500;position: relative; padding-left: 30%;width: 100%;">
 <img src="{{single_product.val.product_image}}" width="150" height="150"  style="margin-left: 10%;margin-bottom: 3%;">
-<form action="{%url 'update' single_product.val.product_id%}" method='POST' enctype="multipart/form-data">
+<form action="{%url 'update' single_product.val.product_id%}?owner_id={{single_product.val.user_id}}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
     <div class='form-group'>
     {{update_form}}

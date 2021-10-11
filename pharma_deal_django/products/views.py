@@ -136,7 +136,7 @@ def delete(request,product_id):
     if request.session['status'] == 'logged_in':
         #distributors = firebase.database.child('Distributors').get().val()
         if request.session['privilege'] == 'distributors':
-            if request.session['user_id'] == request.POST.get('owner_id'): 
+            if request.session['user_id'] == request.GET['owner_id']: 
                 firebase.database.child('Products').child('pro_00%d'%product_id).remove()
                 return redirect('/products/browse/')
             return redirect('/produts/inventory')
