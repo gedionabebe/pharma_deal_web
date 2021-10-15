@@ -29,6 +29,5 @@ urlpatterns = [
     path('profile/', include('profile.urls')),
     path('transaction/', include('transaction.urls')),
     path('review_and_rate/', include('review_and_rate.urls')),
-    url(r'^media/(?P<path>.*)$', serve,{'document_root':       settings.MEDIA_ROOT}), 
-    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
+    
 ]
