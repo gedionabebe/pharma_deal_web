@@ -23,9 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '1zmze_a40k7d-70e3@alxsfcgyd59e-axg*q2jxocfq%k$&vq0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['127.0.0.1','pharmadeal.herokuapp.com/']
+DEBUG = True
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -127,11 +126,11 @@ STATIC_URL = '/static/'
 #STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'staticfiles'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
 SESSION_FILE_PATH = os.path.join(BASE_DIR, 'sessions')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
