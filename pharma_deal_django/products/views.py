@@ -87,7 +87,7 @@ def update(request,product_id):
     if request.session['status'] == 'logged_in':
         #distributors = firebase.database.child('Distributors').get().val()
         if request.session['privilege'] == 'distributors':
-            print('user_id',request.GET['owner_id'])
+           # print('user_id',request.GET['owner_id'])
             if request.session['user_id'] == request.GET['owner_id']:
                 
                 print("----===10000000000000001===-------")
