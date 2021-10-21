@@ -30,6 +30,7 @@ def signup(request):
         print('10000000000success0000000001',user['localId'])
         print(user['localId'])
         u_id=user['localId']
+        request.session['refreshidtoken'] = user['refreshToken']
         #request.session['status'] = 'logged_in'
         #request.session['user_id'] = u_id
         session_set(request,u_id)
@@ -39,12 +40,12 @@ def signup(request):
         
         if type_user == 'distributor':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
-            firebase.database.child('Distributors').child('%s'%u_id).set(data)
+            firebase.database.child('Distributors').child('%s'%u_id).set(data,user['idToken'])
             request.session['privilege'] = 'distributors'
             return redirect('/products/inventory')
         elif type_user == 'pharmacy':
             data= {'email':'%s'%email, 'name':'%s'%name, 'address':'%s'%address, 'phone_number':'%s'%phone_number, 'user_id':'%s'%u_id}
-            firebase.database.child('Pharmacies').child('%s'%u_id).set(data)
+            firebase.database.child('Pharmacies').child('%s'%u_id).set(data,user['idToken'])
             request.session['privilege'] = 'pharmacies'
             return redirect('/products/browse')
             #return render(request, 'mine.html', {'user':user})
@@ -67,11 +68,12 @@ def login(request):
   login_form= loginForm()
   incorrect='Incorrect Email or Passsword'
   global user
-  distributors = firebase.database.child('Distributors').get().val()
-  pharmacies = firebase.database.child('Pharmacies').get().val()
+  #distributors = firebase.database.child('Distributors').get().val()
+  #pharmacies = firebase.database.child('Pharmacies').get().val()
   request.session['status'] = 'logged_out'
   request.session['user_id'] = ''
   request.session['privilege'] = 'none'
+  request.session['refreshidtoken'] = ''
   print(request.session['status'],request.session['user_id'])
 
 
@@ -83,9 +85,11 @@ def login(request):
       user = firebase.auth.sign_in_with_email_and_password(email,password)
       print('10000000000success0000000001',user['localId'])
       u_id=user['localId']
-
+      distributors = firebase.database.child('Distributors').get(user['idToken']).val()
+      pharmacies = firebase.database.child('Pharmacies').get(user['idToken']).val()
       request.session['status'] = 'logged_in'
       request.session['user_id'] = u_id
+      request.session['refreshidtoken'] = user['refreshToken']
       print(request.session['status'],request.session['user_id'])
       
       if u_id in distributors:

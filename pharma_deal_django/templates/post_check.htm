@@ -12,34 +12,34 @@
         </div>
         <br>
         <div class="row portfolio-container">
-            {% for lis_time,date,ph,me,co,img,p_name,stat,p_info in comb_lis %}
+            {% for request in dist_requests.values %}
             <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
                 <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                    <img class="card-img-top" src="{{img}}" style="height: 200px;">
+                    <img class="card-img-top" src="{{request.product_image}}" style="height: 200px;">
                     <div class="card-body">
-                        <p class="card-text">Medicine : {{me}}</p>
-                        <p class="card-text">Pharmacy's phone number : {{p_info}}</p>
-                        <p class="card-text">Pharmacy : {{p_name}} </p>
-                        <p class="card-text">Cost : {{co}}</p>
-                        <p class="card-text">Request made at : {{date}} &nbsp;</p>
-                        {%if stat == 'pending' %}
+                        <p class="card-text">Medicine : {{request.product_name}}</p>
+                        <p class="card-text">Pharmacy's phone number : {{request.pharmacy_number}}</p>
+                        <p class="card-text">Pharmacy : {{request.pharmacy_name}} </p>
+                        <p class="card-text">Cost : {{request.price}}</p>
+                        <p class="card-text">Request made at : {{request.time_of_request}} &nbsp;</p>
+                        {%if request.status == 'pending' %}
                         <p id="status" style="color: green;">Status : Pending</p>
-                        {%elif stat == 'accepted' %}
+                        {%elif request.status == 'accepted' %}
                         <p id="status" style="color: blue;">Status : Accepted</p>
-                        {%elif stat == 'declined' %}
+                        {%elif request.status == 'declined' %}
                         <p id="status" style="color: red;">Status : Declined</p>
                         {%endif%}
 
 
                         <form action="{%url 'accept'%}" method="POST" id="accept">
                             {% csrf_token %}
-                            <input type="hidden" name="lis_time" value="{{lis_time}}">
+                            <input type="hidden" name="request_id" value="{{request.request_id}}">
                             <button class="btn btn-outline-primary" type="submit">
                                 <i class="fa fa-check" aria-hidden="true"></i>Accept</button>
                         </form>
                         <form action="{%url 'decline'%}" method="POST" id="decline">
                             {% csrf_token %}
-                            <input type="hidden" name="lis_time" value="{{lis_time}}">
+                            <input type="hidden" name="request_id" value="{{request.request_id}}">
                             <button class="btn btn-outline-danger" type="submit">
                                 <i class="fa fa-minus-square" aria-hidden="true"></i>Decline</button>
                         </form>

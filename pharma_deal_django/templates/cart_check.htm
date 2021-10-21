@@ -15,34 +15,34 @@
             </div>
             <br> 
             <div class="row portfolio-container">
-                {% for time,date,me,co,img,stat,did,ph,pid,p_name,dist_info in comb_lis %}
+                {% for request in pharma_requests.values %}
                     <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
                         <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                            <img class="card-img-top" src="{{img}}" style="height: 200px;">
+                            <img class="card-img-top" src="{{request.product_image}}" style="height: 200px;">
                             <div class="card-body">                       
                                 <div id="contents">
-                                    <p>Medicine : {{me}}</p>
-                                    <p>Distributor's phone number: {{dist_info}}</p>
-                                    <p>Cost : {{co}}</p>
-                                    <p>Date : {{date}} &nbsp;</p>
-                                    {%if stat == 'pending' %}
-                                    <p id="status" style="color: yellow;">Status : Pending</p> 
-                                    {%elif stat == 'accepted' %}
+                                    <p>Medicine : {{request.product_name}}</p>
+                                    <p>Distributor's phone number: {{request.distributor_number}}</p>
+                                    <p>Cost : {{request.price}}</p>
+                                    <p>Date : {{request.time_of_request}} &nbsp;</p>
+                                    {%if request.status == 'pending' %}
+                                    <p id="status" style="color: rgb(0, 255, 42);">Status : Pending</p> 
+                                    {%elif request.status == 'accepted' %}
                                     <p id="status" style="color: blue;">Status : Accepted</p>
-                                    {%elif stat == 'declined' %}
+                                    {%elif request.status == 'declined' %}
                                     <p id="status" style="color: red;">Status : Declined</p>
                                     {%endif%}
                                 </div>
-                                {%if stat == 'accepted' %}
+                                {%if request.status == 'accepted' %}
                                 
-                                <form id="review_button" action="{%url 'review_and_rate'%}?url={{img | urlencode}}" method="POST">
+                                <form id="review_button" action="{%url 'review_and_rate'%}?url={{request.product_image | urlencode}}" method="POST">
                                     {% csrf_token %}   
-                                    <input type="hidden" name="transaction_status" value="{{stat}}">
-                                    <input type="hidden" name="pharma_id" value="{{ph}}">
-                                    <input type="hidden" name="product_id" value="{{pid}}">
-                                    <input type="hidden" name="owner_name" value="{{stat}}">
-                                    <input type="hidden" name="product_name" value="{{me}}">
-                                    <input type="hidden" name="cost" value="{{co}}">
+                                    <input type="hidden" name="transaction_status" value="{{request.status}}">
+                                    <input type="hidden" name="pharma_id" value="{{request.pharmacy_id}}">
+                                    <input type="hidden" name="product_id" value="{{request.product_id}}">
+                                    <input type="hidden" name="owner_name" value="{{request.distributor_name}}">
+                                    <input type="hidden" name="product_name" value="{{request.product_name}}">
+                                    <input type="hidden" name="cost" value="{{request.price}}">
                                     <button class="btn btn-outline-info" type="submit" ><i class="fa fa-star-o" aria-hidden="true"></i>  Review</button>
                                 </form>
                                 {%endif%}

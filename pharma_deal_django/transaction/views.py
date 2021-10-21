@@ -2,179 +2,93 @@ import pyrebase
 from django.shortcuts import render,redirect
 
 from django.http import HttpResponse
+import requests
 from authentication import firebase
+from datetime import datetime, timezone
+import pytz,string,random
 
 
 db = firebase.database
 
 def post_create(request):
 
-    import time 
-    from datetime import datetime, timezone
-    import pytz
-    tz = pytz.timezone('Africa/Addis_Ababa')
-    time_now = datetime.now(timezone.utc).astimezone(tz)
-    millis = int(time.mktime(time_now.timetuple()))
-    print("mill" + str(millis)) 
-    Medicine = request.POST.get('medicine')
-    Distributor = request.POST.get('distributor')
-    Pharmacy = request.session["user_id"]
-    distributor_info = db.child('Distributors').child('%s'%Distributor).get().val()['phone_number']
-    pharmacy_info = db.child('Pharmacies').child('%s'%Pharmacy).get().val()['phone_number']
-   
+    if request.session['status'] == 'logged_in':
+        if request.session['privilege'] == 'pharmacies':
+            user = firebase.auth.refresh(request.session['refreshidtoken'])
+            product_id = request.POST['product_id']
+            product_name = request.POST['medicine']
+            product_image = request.POST['url']
+            distributor_id = request.POST['distributor']
+            price = request.POST['cost']
+            pharmacy_id = request.session["user_id"]
+            distributor_number = db.child('Distributors').child('%s'%distributor_id).get(user['idToken']).val()['phone_number']
+            pharmacy_number = db.child('Pharmacies').child('%s'%pharmacy_id).get(user['idToken']).val()['phone_number']
+            pharmacy_name =  firebase.database.child('Pharmacies').child('%s'%pharmacy_id).get(user['idToken']).val()['name']
+            distributor_name = db.child('Distributors').child('%s'%distributor_id).get(user['idToken']).val()['name']
+            request_id = ''.join(random.choices(string.ascii_lowercase + string.digits,k=7))
+            time_of_request = str(datetime.now(timezone.utc).astimezone(pytz.timezone('Africa/Addis_Ababa')))
 
-    pn =  firebase.database.child('Pharmacies').child('%s'%Pharmacy).get().val()['name']
-    print(pn)
-    product_id = request.POST.get('product_id') 
-    Cost = request.POST.get('cost')
-    url = request.POST.get('url')
-    
-    try:
-        user_id = request.session['user_id']  
-
-        data = {
-            'medicine': Medicine,
-            'distributor': Distributor,
-            'pharmacy': Pharmacy,
-            'product_id': product_id,
-            'cost': Cost,
-            'status': "pending",
-            'url' : url,
-            'pharam_name':pn,
-            'pharma_info':pharmacy_info,
-            'distributor_info':distributor_info,
-        }
-        db.child('transaction').child(millis).set(data)
-       
-        return redirect('/transaction/cart_check')
-    except KeyError:
-        message = "oops user is logged out"
-        return render(request,"create.htm",{"mes":message})
-
+            data = {'product_id':'%s'%product_id, 'product_name':'%s'%product_name, 'product_image':'%s'%product_image,
+                    'distributor_id':'%s'%distributor_id, 'price':'%s'%price, 'pharmacy_id':'%s'%pharmacy_id,
+                    'distributor_number':'%s'%distributor_number, 'pharmacy_number':'%s'%pharmacy_number, 'pharmacy_name':'%s'%pharmacy_name,
+                    'distributor_name':'%s'%distributor_name, 'request_id':'req_00%s'%request_id, 'time_of_request':'%s'%time_of_request, 'status': "pending",
+            }
+            try:
+                db.child('transaction').child('req_00%s'%request_id).set(data,user['idToken'])
+                return redirect('/transaction/cart_check')
+            except requests.HTTPError as e:
+                print('first',e)
+                return render(request, 'unauthorized.html')
+        return redirect('/products/browse')
+    return redirect('/authentication/')
 
 def post_check(request):
-    if request.session['status'] == 'logged_in' and request.session['privilege'] == 'distributors':
-        import datetime
-        
-        user_id = request.session['user_id']  
-
-        timestamps = db.child('transaction').shallow().get().val()
-        #shallow is used to get the key
-        lis_time = []
-        for i in timestamps:
-            lis_time.append(i)
-        lis_time.sort(reverse = False)
-        print(lis_time)
-        ph = []
-        me = []
-        co = []
-        img = []
-        stat = []
-        p_name= []
-        p_info = []
-        for i in lis_time:
-            pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
-            medicine = db.child('transaction').child(i).child('medicine').get().val()
-            cost = db.child('transaction').child(i).child('cost').get().val()
-            img_url = db.child('transaction').child(i).child('url').get().val()
-            status = db.child('transaction').child(i).child('status').get().val() 
-            Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
-            pharma_name = db.child('transaction').child(i).child('pharam_name').get().val()
-            pharma_info = db.child('transaction').child(i).child('pharma_info').get().val()
-            # if status == 'pending' and user_id == Distributor_id:
-            if user_id == Distributor_id:
-                ph.append(pharmacy)
-                me.append(medicine)
-                co.append(cost)
-                img.append(img_url)
-                stat.append(status)
-                p_name.append(pharma_name)
-                p_info.append(pharma_info)
-    
-        date=[]
-        for i in lis_time:
-            i = float(i)
-            dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
-            date.append(dat)
-        print(date)
-        comb_lis = zip(lis_time,date,ph,me,co,img,p_name,stat,p_info)
-        return render(request,"post_check.htm",{'comb_lis': comb_lis})
-    else :
-        return render(request,"login.html")
-    
-    
+    if request.session['status'] == 'logged_in':
+        if request.session['privilege'] == 'distributors':
+            user = firebase.auth.refresh(request.session['refreshidtoken'])
+            distributor_id = request.session['user_id']
+            try:
+                dist_requests = db.child('transaction').order_by_child('distributor_id').equal_to('%s'%distributor_id).get(user['idToken']).val()
+                return render(request,"post_check.htm",{'dist_requests': dist_requests})
+            except requests.HTTPError as e:
+                print('first',e)
+                return render(request, 'unauthorized.html')
+        return redirect('/products/browse')
+    return redirect('/authentication/')
 
 def accept(request):
-    key = request.POST.get('lis_time')
-    
-    print(key)
-    
-    db.child("transaction").child(key).update({'status':'accepted'})
-    return redirect('/transaction/post_check')
+    user = firebase.auth.refresh(request.session['refreshidtoken'])
+    request_id = request.POST['request_id']
+    try:
+        db.child("transaction").child('%s'%request_id).update({'status':'accepted'},user['idToken'])
+        return redirect('/transaction/post_check')
+    except requests.HTTPError as e:
+                print('first',e)
+                return render(request, 'unauthorized.html')
 
 def decline(request):
-    key = request.POST.get('lis_time')
-    
-    print(key)
-    db.child("transaction").child(key).update({'status':'declined'})
-    return redirect('/transaction/post_check')
-
-
+    user = firebase.auth.refresh(request.session['refreshidtoken'])
+    request_id = request.POST['request_id']
+    try:
+        db.child("transaction").child('%s'%request_id).update({'status':'declined'},user['idToken'])
+        return redirect('/transaction/post_check')
+    except requests.HTTPError as e:
+                print('first',e)
+                return render(request, 'unauthorized.html')
 
 def cart_check(request):
-    if request.session['status'] == 'logged_in' and request.session['privilege'] == 'pharmacies':
-        import datetime
-        
-        user_id = request.session['user_id']  
 
-        timestamps = db.child('transaction').shallow().get().val()
-        #shallow is used to get the key
-        lis_time = []
-        for i in timestamps:
-            lis_time.append(i)
-        lis_time.sort(reverse = False)
-        print(lis_time)
-        ph = []
-        me = []
-        co = []
-        img = []
-        stat = []
-        did = []
-        pid = []
-        p_name= []
-        dist_info = []
-        for i in lis_time:
-            pharmacy = db.child('transaction').child(i).child('pharmacy').get().val()
-            medicine = db.child('transaction').child(i).child('medicine').get().val()
-            cost = db.child('transaction').child(i).child('cost').get().val()
-            img_url = db.child('transaction').child(i).child('url').get().val()
-            status = db.child('transaction').child(i).child('status').get().val() 
-            Distributor_id = db.child('transaction').child(i).child('distributor').get().val()
-            product_id = db.child('transaction').child(i).child('product_id').get().val()
-            pharma_name = db.child('transaction').child(i).child('pharam_name').get().val()
-            distributor_info = db.child('transaction').child(i).child('distributor_info').get().val()
-            if pharmacy == user_id:
-                me.append(medicine)
-                co.append(cost)
-                img.append(img_url)
-                stat.append(status)
-                did.append(Distributor_id)
-                ph.append(pharmacy)
-                pid.append(product_id)
-                p_name.append(pharma_name)
-                dist_info.append(distributor_info)
-    
-        date=[]
-        for i in lis_time:
-            i = float(i)
-            dat = datetime.datetime.fromtimestamp(i).strftime('%H:%M:%S %d-%m-%y')
-            date.append(dat)
-        print(date)
-        comb_lis = zip(lis_time,date,me,co,img,stat,did,ph,pid,p_name,dist_info)
-        print('items:--' ,comb_lis)
-        return render(request,"cart_check.htm",{'comb_lis': comb_lis})
-    else :
-        return render(request,"login.html")
-    
-    
-    
+    if request.session['status'] == 'logged_in':
+        if request.session['privilege'] == 'pharmacies':
+            pharmacy_id = request.session['user_id']
+            user = firebase.auth.refresh(request.session['refreshidtoken'])
+            try:
+                pharma_requests = db.child('transaction').order_by_child('pharmacy_id').equal_to('%s'%pharmacy_id).get(user['idToken']).val()
+                return render(request,"cart_check.htm",{'pharma_requests': pharma_requests})
+            except requests.HTTPError as e:
+                print('first',e)
+                return render(request, 'unauthorized.html')
+        return redirect('/products/browse')
+    return redirect('/authentication/')
+
+   
