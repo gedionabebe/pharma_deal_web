@@ -13,57 +13,39 @@
     <title>Document</title>
   </head>
   {%block content%}
-    <section id="portfolio" class="portfolio">
-      <div class="container" style="margin-top: 50px;">
+    <section>
+      <div>
         <br>
-      <div  id='search_bar' >
-        <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class='input-group'>
-          <div class="form-outline">
-        <input type="text"  id="form1" placeholder="Search...." name="search" class="form-control">
-        
-      </div>
-      <span class="icon-input-btn">
-		
-    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
-		
-	</span>
-
-</div>
-      </form>
-    </div>
-    
-        
-        <br>
-        <div id='filter_bar' class='form-group'>
-          <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class='input-group'  style="width: 300px;">
-          
-          <select  class="form-control" name ='filter'>
-            <option value="drug"> Drug</option>
-            <option value="accessories"> Accessories</option>
-            <option value="medical_equipment">Medical equipment</option>
-          </select>
-          
-          
-		
-            <button type="submit" class="btn btn-primary" style="height: 40px;">
-               Filter
-              <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
-              </svg>
-          </button> 
-            
-          
+        <div>
+          <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class='input-group'>
+              <div class="main">
+                <input type="text"  id="form1" placeholder="Search...." name="search" class="form-control">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
+              </div>
+            </div>
+          </form>
         </div>
-        </form></div>
-        
-        <div class="row portfolio-container">
+        <br>
+        <div>
+          <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main">
+              <select  class="form-control" name ='filter'>
+                <option value="drug"> Drug</option>
+                <option value="accessories"> Accessories</option>
+                <option value="medical_equipment">Medical equipment</option>
+              </select>
+              <button type="submit" ><i class="fas fa-filter"></i></button> 
+            </div>
+          </form>
+        </div>
+        <div class="cards">
+          <div class="services">
           {% for product in products.values %}
-            <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-              <div class="card my-2 mx-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+            
+              <div class="content content-1">
                 <a href="{% url 'single_product' product.product_id %}">
                   <img class="card-img-top" src="{{product.product_image}}" style="height:200px;">
                 </a>
@@ -89,13 +71,14 @@
                     <input type="hidden" name="distributor" value="{{product.user_id}}">
                     <input type="hidden" name="product_id" value="{{product.product_id}}">      
                     <input type="hidden" name="cost" value="{{product.price}}">
-                    <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
+                    <button class="addtocartbtn" type="submit"><i class="fa fa-cart-plus" aria-hidden="true" style="font-size:1.2em; margin:5px;"></i>    Add to cart</button>
                   </form>
                   {%endif%}
                 </div>        
               </div>
-            </div>
+            
           {% endfor %}
+        </div>
         </div>
       </div>
     </section><!-- End Portfolio Section -->

@@ -1,0 +1,108 @@
+{%extends 'base.html'%}
+{%block content%}
+<div>
+   
+    <form action="{%url 'showpro'%}" method="POST">
+        {% csrf_token %}
+        <div class="wrapper">
+
+            <div class="left">
+                    
+                <img src="{{i}}" width="100" />
+                    
+                {% csrf_token %}
+                <h4>Name :{{n}}</h4>
+                <h4>Account:{{priv}}</h4>
+            </div>
+        
+            <div class="right">
+                <div class="info">
+                    <h3>Information</h3>
+                    <div class="info_data">
+                        <div class="data">
+                            <h4>Email</h4>
+                            <p>user@mail.com</p>
+                        </div>
+                        <div class="data">
+                            <h4>Phone</h4>
+                            <p>123456789</p>
+                        </div>
+                    </div>
+                </div>
+                
+                    <input type="file" name="files[]" id="files" required>
+                    <input type="hidden" name="url" id="url">
+                <br>
+                <br>
+                <div class="social_media">
+                    <ul>
+                        <li><button type="button" onclick="uploadimage()" name="prof">Upload</button></li>
+                        <li><input type="submit" value="Change" name="prof"> </li>
+                    </ul>
+                    <br>
+                    <ul>
+                        <li><button type="button" onclick="resetPassword()">Reset Password</button></li>
+                    </ul>
+
+                </div>
+        </div>
+    </form>
+</div>
+<br>
+<br>
+{% endblock %}
+
+{% block javascript %}
+    <script src="https://gstatic.com/firebasejs/3.7.4/firebase.js"> </script>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+    <script>
+        var config = {
+            apiKey: "AIzaSyCfi5fRVCgXm-OQfgcs_qp08qxo8yWi5oo",
+            authDomain: "pharma-deal-38f66.firebaseapp.com",
+            databaseURL: "https://pharma-deal-38f66-default-rtdb.firebaseio.com",
+            storageBucket: "pharma-deal-38f66.appspot.com"
+        };
+        firebase.initializeApp(config)
+        function uploadimage() {
+            var storage = firebase.storage()
+            var file = document.getElementById("files").files[0];
+            var storageRef = storage.ref();
+            var thisref = storageRef.child(file.name).put(file);
+            thisref.on('state_changed', function (snapshot) {
+                console.log("file uploaded succesfully");
+            },
+                function (error) {
+
+                },
+
+                function () {
+                    var downloadURL = thisref.snapshot.downloadURL;
+                    console.log("got url");
+                    document.getElementById("url").value = downloadURL;
+                    alert("file uploaded succesfully");
+
+                });
+
+        }
+
+        function resetPassword() {
+
+            var auth = firebase.auth();
+            var emailAddress = prompt("Please enter your email", "email");
+            auth.sendPasswordResetEmail(emailAddress)
+                .then(function () {
+                    // Email sent.
+                })
+                .catch(function (error) {
+                    // An error happened.
+                });
+
+
+
+        }
+
+
+    </script> 
+
+{%endblock%}

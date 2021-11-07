@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800|Poppins&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat',sans-serif;
+}
+.cards{
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 30px;
+}
+.cards h1.header{
+    font-size: 40px;
+    margin: 0 0 30px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.services{
+    display: grid;
+    align-items: stretch;
+    grid-template-columns: repeat(3, 1fr);
+}
+.content{
+    display: table-row;
+    /* flex-wrap: wrap;
+    flex: 1; */
+    margin: 20px;
+    padding: 20px 0px;
+    border: 2px solid black;
+    border-radius: 4px;
+    transition: all .3s ease;
+    
+}
+.content .fab{
+    font-size: 70px;
+    margin: 16px 0;
+}
+.content > *{
+    flex: 1 1 100%;
+}
+/* .content:hover{
+    color: white;
+}
+.content:hover a{
+    border-color: white;
+    background: white;
+} */
+/* .content-1:hover{
+    border-color: #1DA1F2;
+    background: #1DA1F2;
+}
+.content-1:hover a{
+    color: #1DA1F2;
+} */
+.content-2:hover{
+    border-color: #E1306C;
+    background: #E1306C;
+}
+.content-2:hover a{
+    color: #E1306C;
+}
+.content-3:hover{
+    border-color: #ff0000;
+    background: #ff0000;
+}
+.content-3:hover a{
+    color: #ff0000;
+}
+.content h2{
+    font-size: 30px;
+    margin: 16px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.content p{
+    font-size: 17px;
+    font-family: 'Poppins',sans-serif;
+}
+.content .reviewbtn{
+    margin-top: 40px;
+    background: #03925e;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid black;
+    padding: 10px 150px;
+    transition: .3s ease;
+    font-size: 24px;
+}
+.content .reviewbtn:hover{
+    border-radius: 4px;
+    background:#00FF00;
+}
+.content .addtocartbtn{
+    margin-top: 40px;
+    background: #03925e;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid black;
+    padding: 10px 80px;
+    transition: .3s ease;
+    font-size: 18px;
+    width: max-content;
+}
+.content .addtocartbtn:hover{
+    border-radius: 4px;
+    background:#00FF00;
+}
+.content .updatebtn{
+    margin-top: 40px;
+    background: #03925e;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid black;
+    padding: 10px 100px;
+    transition: .3s ease;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.content .updatebtn:hover{
+    border-radius: 4px;
+    background:#00FF00;
+}
+.content .deletebtn{
+    margin-top: 40px;
+    background:rgb(255, 54, 54);
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid black;
+    padding: 10px 100px;
+    transition: .3s ease;
+    font-size: 18px;
+    border-radius: 10px;
+}
+.content .deletebtn:hover{
+    border-radius: 4px;
+    background:red;
+}
+.create-title{
+    /* border-bottom: dotted black 2px; */
+}
+.formcontrol{
+    display: block;
+    width: 50%;
+    height: 2em;
+}
+.create-form{
+    align-content: center;
+    margin-left:33.3%;
+    
+}
+.create-form .formcontrol{
+    padding: 20px 0;
+}
+
+.formgroup{
+    border:10px black;
+}
+.updatebtn{
+    margin-top: 40px;
+    background: #03925e;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    border: 1px solid black;
+    padding: 10px 100px;
+    transition: .3s ease;
+    font-size: 18px;
+    border-radius: 10px;
+    
+}
+.updatebtn:hover{
+    border-radius: 4px;
+    background:#00FF00;
+}
+.createbtndiv{
+    margin-left: 10%;
+}
+@media (max-width: 900px) {
+    .services{
+    display: table-row;
+    flex-direction: column;
+    }
+}

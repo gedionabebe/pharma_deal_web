@@ -3,9 +3,6 @@
    Serach Results
 {%endblock%}
 {%block content%}
-
-
-<!--<hr style='border-top: 3px solid  rgb(41, 40, 40);width: 80%;'>>-->
 <html lang="en">
 
 <head>
@@ -16,53 +13,36 @@
 </head>
 <body>
  <section id="portfolio" class="portfolio">
-    <div class="container" style="margin-top: 50px;">
-      <h1 style="position: relative; padding-left: 20% ; padding-bottom: 5%; font-size: 25px; color: rgb(89, 86, 86);"> Search results for:  {{input}}</h1>
-   
-
-   <div  id='search_bar' >
-    <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class='input-group'>
-      <div class="form-outline">
-    <input type="text"  id="form1" placeholder="Search...." name="search" class="form-control">
-    
-  </div>
-  <span class="icon-input-btn">
-
-<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
-
-</span>
-
-</div>
-  </form>
-</div>
-
-    
-    <br>
-    <div id='filter_bar' class='form-group'>
-      <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class='input-group'  style="width: 300px;">
-      
-      <select id='filter_search' class="form-control" name ='filter_search'>
-        <option value="drug"> Drug</option>
-        <option value="accessories"> Accessories</option>
-        <option value="medical_equipment">Medical equipment</option>
-      </select>
-      
-      
-
-        <button type="submit" class="btn btn-primary" style="height: 40px;">
-           Filter
-          <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" fill="currentColor" class="bi bi-funnel-fill" viewBox="0 0 16 16">
-            <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"/>
-          </svg>
-      </button> 
-        
-      
+    <div class="container">
+      <h1> Search results for:  {{input}}</h1>
     </div>
-    </form></div>
+   
+   <div>
+          <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class='input-group'>
+              <div class="main">
+                <input type="text"  id="form1" placeholder="Search...." name="search" class="form-control">
+                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> </button> 
+              </div>
+            </div>
+          </form>
+        </div>
+        <br>
+        <div>
+          <form action="{%url 'filters'%}" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="main">
+              <select  class="form-control" name ='filter_search'>
+                <option value="drug"> Drug</option>
+                <option value="accessories"> Accessories</option>
+                <option value="medical_equipment">Medical equipment</option>
+              </select>
+              <button type="submit" ><i class="fas fa-filter"></i></button> 
+            </div>
+          </form>
+        </div>
+        </div>
     <!-- 
   <form action="{%url 'search'%}" method='POST' enctype="multipart/form-data">
     {% csrf_token %}
@@ -87,25 +67,24 @@
   -->
   
 
-  {% if search_result%}
-   {% for search_result in search_result %}
-   <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-    <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) ">
-      <a href="{% url 'single_product' search_result.product_id %}">
-    <p><img class="card-img-top" src="{{search_result.product_image}}" style="height: 200px; width:200px;"></p>
-  </a>
-    <div class="card-body" > 
-    <div id="contents">
-      <p> Name: {{search_result.product_name}} </p>
-      <!--<p> Description: {{search_result.description}} </p>-->
-      <p>Brand: {{search_result.brand}}</p>
-     <!-- <p>Manufacturing company: {{search_result.manufacturing_company}}</p>
-      <p>Form of preparation: {{search_result.form_of_preparation}}</p>-->
-      <p> Category: {{search_result.category.capitalize}} </p>
-      <p> Price: {{search_result.price}} </p>
-      <!--<p> Manufacturing date: {{search_result.manufacturing_date}} </p>
-      <p> Expiry date: {{search_result.expiry_date}}</p>-->
-      {% if request.session.privilege == 'pharmacies'%}
+      {% if search_result%}
+        <div class="cards">
+          <div class="services">
+            {% for search_result in search_result %}
+              <div class="content content-1">
+                <a href="{% url 'single_product' search_result.product_id %}">
+                  <p><img class="card-img-top" src="{{search_result.product_image}}" style="height: 200px; width:200px;"></p>
+                </a>
+                <p> Name: {{search_result.product_name}} </p>
+                <!--<p> Description: {{search_result.description}} </p>-->
+                <p>Brand: {{search_result.brand}}</p>
+                <!-- <p>Manufacturing company: {{search_result.manufacturing_company}}</p>
+                <p>Form of preparation: {{search_result.form_of_preparation}}</p>-->
+                <p> Category: {{search_result.category.capitalize}} </p>
+                <p> Price: {{search_result.price}} </p>
+                <!--<p> Manufacturing date: {{search_result.manufacturing_date}} </p>
+                <p> Expiry date: {{search_result.expiry_date}}</p>-->
+                {% if request.session.privilege == 'pharmacies'%}
                   <form action="{%url 'post_create'%}" method="POST" id="Addtocart">
                     {% csrf_token %} 
                     <input type="hidden" name="url" value="{{search_result.product_image}}">
@@ -113,23 +92,16 @@
                     <input type="hidden" name="distributor" value="{{search_result.user_id}}">
                     <input type="hidden" name="product_id" value="{{search_result.product_id}}">      
                     <input type="hidden" name="cost" value="{{search_result.price}}">
-                    <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
+                    <button class="addtocartbtn"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
                   </form>
-                  {%endif%}
-    </div>
-    </div>
-  
-</div>
-</div>
-  <br>
-  {% endfor %}
-  {%else%}
-  {{no_reslut}}
-  {%endif%}
-  
-
-  
-  
+                {%endif%}
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      {%else%}
+        {{no_reslut}}
+      {%endif%}  
 </body>
 </html>
 {%endblock%}

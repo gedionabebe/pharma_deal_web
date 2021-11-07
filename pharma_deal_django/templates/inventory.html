@@ -3,9 +3,12 @@
   {% block title %}
     Owner's Page
   {% endblock %}
+  {% block extra %}
+    <link>
+  {% endblock %}
   {% block content %}
-    <section id="portfolio" class="portfolio">
-      <div class="container" style="margin-top: 50px;">
+    <section>
+      <div>
         <div class="section-title">
           <h1> <i class="fa fa-plus-square" aria-hidden="true">  Inventory</i>  </h1>
         </div>
@@ -18,13 +21,13 @@
           <a href="{%url 'login'%}">Logout</a>
         </div> -->
         <!-- <br> -->
-
-        <div class="row portfolio-container">
+        <div class="cards">
+          <div class="services">
           {% for product in user_inventory.values %}
-            <div class="col-lg-4 col-md-6  filter-app wow fadeInUp">
-              <div class=" card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+            
+              <div class="content content-1">
                 <img class="card-img-top" src="{{product.product_image}}" style="height:200px;" >
-                <div class="card-body"> 
+                
                   <p>Name: {{product.product_name}} </p>
                   <p>Description: {{product.description}} </p>
                   <p>Brand: {{product.brand}}</p>
@@ -34,8 +37,8 @@
                   <p> Price: {{product.price}} </p>
                   <p> Manufacturing date: {{product.manufacturing_date}} </p>
                   <p> Expiry date: {{product.expiry_date}}</p>
-                  <a href="{% url 'update' product.product_id %}?owner_id={{product.user_id}}"><button class="btn btn-outline-primary" type="submit" form = "update_form"><i class="fa fa-wrench" aria-hidden="true"></i> Update</button></a>
-                  <a href="{% url 'delete' product.product_id %}?owner_id={{product.user_id}}"><button class="btn btn-outline-danger" type="submit" form = "delete_form"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button></a>
+                  <a href="{% url 'update' product.product_id %}?owner_id={{product.user_id}}"><button class="updatebtn" type="submit" form = "update_form"><i class="fa fa-wrench" aria-hidden="true"></i> Update</button></a>
+                  <a href="{% url 'delete' product.product_id %}?owner_id={{product.user_id}}"><button class="deletebtn" type="submit" form = "delete_form"><i class="fa fa-trash" aria-hidden="true"></i> Delete</button></a>
                   <!--<form action="{% url 'update' product.product_id %}" method="POST" enctype="multipart/form-data" id="update_form">
                     {% csrf_token %}
                     <input type='hidden' name = 'owner_id' value="{{product.user_id}}">
@@ -47,9 +50,9 @@
                   <!--<a href="{% url 'update' product.product_id %}"><button type="button">Update</button></a> <a
                     href="{% url 'delete' product.product_id %}"><button type="button">Delete</button></a> <a><button type="button">Review</button></a>-->
                 </div>
-              </div>
-            </div>
+             
           {% endfor %}
+        </div>  
         </div>
       </div>
     </section>

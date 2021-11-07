@@ -1,124 +1,116 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="{%static 'css/style.css'%}">
-        <link rel="stylesheet" type="text/css" href="{%static 'vendor/bootstrap/css/bootstrap.min.css'%}">
-        <link rel="stylesheet" type="text/css" href="{%static 'vendor/icofont/icofont.min.css'%}">
-        <link rel="stylesheet" type="text/css" href="{%static 'vendor/boxicons/css/boxicons.min.css'%}">
-        <link rel="stylesheet" type="text/css" href="{%static 'vendor/venobox/venobox.css'%}">
-        <!-- <link rel="stylesheet" type="text/css" href="{%static 'vendor/owl.carousel/assets/owl.carousel.min.css'%}"> -->
+        <title>{%block title%}{%endblock%}</title>
+        <link rel="stylesheet" href="{%static 'css/base.css' %}">
+        <link rel="stylesheet" href="{%static 'css/card.css' %}"> 
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="{%static 'vendor/fontawesome-free-5.12.0-web/fontawesome-free-5.12.0-web/css/fontawesome.min.css'%}">
         <link rel="stylesheet" href="{%static 'vendor/font-awesome-4.7.0/css/font-awesome.min.css'%}">
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-        <link rel="shortcut icon" href="{% static 'images/favicon.ico' type='image/x-icon' %}">
-        {% block extra %}{% endblock %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+        
+        {%block extra%}{%endblock%}
+
     </head>
-<!--  heading jumbotron -->
     <body>
-    <!-- ======= Header ======= -->
-        <header id="header" class="fixed-top d-flex align-items-center">
-            <div class="container d-flex align-items-center">
-                <div class="logo mr-auto">
-                    <h1><a href="#">Pharma Deal</a></h1>
-                    <!-- Uncomment below if you prefer to use an image logo -->
-                    <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
-                </div>
-                <nav class="nav-menu d-none d-lg-block topndav" id="mydTopnav">
-                    <ul style="color: white;">
-                         </li>
-                        {% if request.session.privilege == 'distributors'%}
-                            <li><a href="{%url 'inventory'%}" style="color: white;">Inventory  <i class="fa fa-plus-square" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'browse'%}" style="color: white;">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'showpro'%}" style="color: white;">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'create'%}" style="color: white;">Add Product  <i class="fa fa-cart-plus" aria-hidden="true"></i></a></li> 
-                            <li><a href="{%url 'post_check'%}" style="color: white;">Requests  <i class="fa fa-question-circle" aria-hidden="true"></i></i></a></li> 
-                            <li><a href="{%url 'login'%}" style="color: white;">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
-                        {% endif %}
-                        {% if request.session.privilege == 'pharmacies'%}
-                            <li><a href="{%url 'cart_check'%}" style="color: white;">Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'browse'%}" style="color: white;">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'showpro'%}" style="color: white;">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
-                            <li><a href="{%url 'login'%}" style="color: white;">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
-                        {% endif %}
-                        {% block nav %}{% endblock %}
-                    </ul>
-                </nav><!-- .nav-menu -->
-            </div>
-        </header><!-- End Header -->
-        <div class="wrapper">
+        <header>
+            <nav>
+              <input type="checkbox" id="check">
+              <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+              </label>
+              <label class="logo">PharmaDeal</label>
+              <ul>
+                    
+                    {% if request.session.privilege == 'distributors'%}
+                    <div class="nav-links">
+                        <li ><a href="{%url 'inventory'%}" >Inventory  <i class="fa fa-plus-square" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'browse'%}">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'showpro'%}">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'create'%}">Add Product  <i class="fa fa-cart-plus" aria-hidden="true"></i></a></li> 
+                        <li ><a href="{%url 'post_check'%}">Requests  <i class="fa fa-question-circle" aria-hidden="true"></i></i></a></li> 
+                        <li ><a href="{%url 'login'%}">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li> 
+                    </div>
+                        
+                    {% endif %}
+                    {% if request.session.privilege == 'pharmacies'%}
+                        
+                    <div class="nav-links">    
+                        <li ><a href="{%url 'cart_check'%}" >Cart <i class="fa fa-shopping-cart" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'browse'%}">Products <i class="fa fa-plus-circle" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'showpro'%}">Profile  <i class="fa fa-user" aria-hidden="true"></i></a></li>
+                        <li ><a href="{%url 'login'%}">Logout  <i class="fa fa-sign-out" aria-hidden="true"></i></a></li>
+                    </div> 
+                    {% endif %}
+                    
+                    {% block nav %}{% endblock %}
+            </ul>
+            </nav>
+        </header>
+        <div class="block-content">
             {% block content %}
+    
             {% endblock %}
         </div>
-        <!-- ======= Footer ======= -->
-        <footer id="footer" class="section-bg">
-            <div class="footer-top">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 footer-contact">
-                            <h3>Pharma Deal</h3>
-                            <p>
-                                In Front of St. Urael Church, AB zone trading 6th floor <br>
-                                Addis Abeba<br>
-                                Ethiopia <br><br>
-                                <strong>Phone:</strong> 0956908251<br>
-                                <strong>Email:</strong> byttechnology5@gmail.com<br>
-                            </p>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="left sector">
+                    <h2>About Us</h2>
+                    <div class="footer-content">
+                        <p>MultiWebPress is a educational blog where we post blogs related to Website Development, Technology, Tips & Hacks and much more creative coding stuff.</p>
+                    <div class="social">
+                        <a href="https://multiwebpress.com"><span class="fab fa-facebook-f"></span></a>
+                        <a href="https://instagram.com/multiwebpress"><span class="fab fa-instagram"></span></a>
+                        <a href="https://www.youtube.com/channel/UCvB-4cVzkhvu4TkTy1hs9zA"><span class="fab fa-youtube"></span></a>
+                    </div>
+                    </div>
+                </div>
+
+                <div class="center sector">
+                    <h2>Contact Us</h2>
+                    <div class="footer-content">
+                        <div class="place">
+                            <span class="fas fa-map-marker-alt"></span>
+                            <span class="text"> New York, USA</span>
                         </div>
-                        <div class="col-lg-2 col-md-6 footer-links">
-                            <h4>Useful Links</h4>
-                            <ul>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Browse your inventory</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Browse for Products</a></li>
-                                <li><i class="bx bx-chevron-right"></i> <a href="#">Logout</a></li>
-                            <!-- <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li> -->
-                            </ul>
+                        <div class="phone">
+                            <span class="fas fa-phone-alt"></span>
+                            <span class="text"> +98-76543210</span>
                         </div>
-                        <div class="col-lg-3 col-md-6 footer-links">
-                            <h4>Our Services</h4>
+                        <div class="email">
+                            <span class="fas fa-envelope"></span>
+                            <span class="text"> contact@example.com</span>
                         </div>
-                        <!--      -->
+                    </div>
+                </div>
+
+                <div class="right sector">
+                    <h2>Subscribe</h2>
+                    <div class="footer-content">
+                        <form action="#">
+                            <div class="email">
+                                <div class="text">Email*</div>
+                            </div>
+                            <input type="email" required>
+                            <div class="btn">
+                                <button type="submit">SUBSCRIBE</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
-            <div class="container d-md-flex py-4">
-                <div class="mr-md-auto text-center text-md-left">
-                    <div class="copyright">
-                    &copy; Copyright <strong><span>Pharma Deal</span></strong>. All Rights Reserved
-                </div>
-                <div class="credits">
-                    <!-- All the links in the footer should remain intact. -->
-                    <!-- You can delete the links only if you purchased the pro version. -->
-                    <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                    <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/Pharma Deal-bootstrap-business-template/ -->
-                    {% comment %} Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> {% endcomment %}
-                </div>
-            </div>
-            <div class="social-links text-center text-md-right pt-3 pt-md-0">
-                <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-                <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-                <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-                <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+
+            <div class="footer-bottom">
+                <center>
+                    <div><span>Powered By <a href="https://www.multiwebpress.com">© 2021 | All Rights Reserved | Made By Multiwebpress</a></span></div>
+                </center>
             </div>
         </footer>
-        <!-- End Footer -->
-
-        <script src="{%static 'vendor/jquery/jquery.min.js'%}"></script>
-        <script src="{%static 'vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
-        <script src="{%static 'vendor/jquery.easing/jquery.easing.min.js'%}"></script>
-        <script src="{%static 'vendor/php-email-form/validate.js'%}"></script>
-        <script src="{%static 'vendor/waypoints/jquery.waypoints.min.js'%}"></script>
-        <script src="{%static 'vendor/counterup/counterup.min.js'%}"></script>
-        <script src="{%static 'vendor/isotope-layout/isotope.pkgd.min.js'%}"></script>
-        <script src="{%static 'vendor/venobox/venobox.min.js'%}"></script>
-        <script src="{%static 'vendor/owl.carousel/owl.carousel.min.js'%}"></script>
-        <!-- Template Main JS File -->
-        <script src="{%static 'assets/js/main.js'%}"></script>
-
     </body>
-    <script src="{%static 'js/bootstrap.bundle.min.js'%}"></script>
-    <!-- Template Main JS File -->
+
+{% block javascript %}
+{% endblock %}
+
 </html>

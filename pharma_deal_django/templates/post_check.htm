@@ -11,10 +11,10 @@
             </h1>
         </div>
         <br>
-        <div class="row portfolio-container">
+        <div class="cards">
+            <div class="services">
             {% for request in dist_requests.values %}
-            <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-                <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+            <div class="content content-1">
                     <img class="card-img-top" src="{{request.product_image}}" style="height: 200px;">
                     <div class="card-body">
                         <p class="card-text">Medicine : {{request.product_name}}</p>
@@ -34,20 +34,21 @@
                         <form action="{%url 'accept'%}" method="POST" id="accept">
                             {% csrf_token %}
                             <input type="hidden" name="request_id" value="{{request.request_id}}">
-                            <button class="btn btn-outline-primary" type="submit">
+                            <button class="updatebtn" type="submit">
                                 <i class="fa fa-check" aria-hidden="true"></i>Accept</button>
                         </form>
                         <form action="{%url 'decline'%}" method="POST" id="decline">
                             {% csrf_token %}
                             <input type="hidden" name="request_id" value="{{request.request_id}}">
-                            <button class="btn btn-outline-danger" type="submit">
+                            <button class="deletebtn" type="submit">
                                 <i class="fa fa-minus-square" aria-hidden="true"></i>Decline</button>
                         </form>
 
                     </div>
-                </div>
+                
             </div>
             {% endfor %}
+            </div>
         </div>
     </div>
 </body>

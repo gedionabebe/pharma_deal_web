@@ -6,38 +6,21 @@ Homepage
 <br>
 {% block content %}
 
-<br>
-<br>
-<br>
-<br>
 
-<div id='create-page'>
-<h1 style="position: relative; text-align: center;"> Create a Product </h1>
-
-
-
-<hr style='border-top: 3px dotted  rgb(41, 40, 40);width: 80%;'>
-<form style="font-weight: 500;position: relative; padding-left: 30%;width: 100%;"action="{%url 'create'%}" method='POST' enctype="multipart/form-data">
-    {% csrf_token %}
-
-<div class='form-group'>
-    {{create_form}}
-
-</div>
-    
-    
-
-    <br>
-    
-    <label for='pro_image'  class="form-label">Add Image:</label>
-    
-    <input style='width:400px;' class='form-control' type='file' name='pro_image'>
-
-    <br>
-    <div class='form-group'>
-    <input class='btn btn-success' type="submit" value="Enter">
-</div>
-</form>
-</div>
+    <div class="create-page">
+        <h1 class="create-title" style="position: relative; text-align: center;"> Create a Product </h1>
+        <form class="create-form" action="{%url 'create'%}" method='POST' enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class='formgroup'>
+                {{create_form}}
+            </div>
+            <br>
+            <label for='pro_image'  class="form-label">Add Image:</label>
+            <input style='width:400px;' class='form-control' type='file' name='pro_image'>
+            <div class='createbtndiv'>
+                <input class="updatebtn" type="submit" value="Create">
+            </div>
+        </form>
+    </div>
 
 {% endblock %}

@@ -1,27 +1,30 @@
 {%extends 'base.html'%}
-{%block title%}
+{% block title %}
     Cart
-{%endblock%}
+{% endblock %}
+
 {%block content%}
-    <body>
+    <body style="max-width: 100%; overflow-x: hidden;">
         <br>
         <br>
         <br>
-        <div class="container-xl my-3">
-            <div class="container p-3 my-3">
-                <h1 class="h1">
-                    My Cart {{e}}
-                </h1>
+        <div>
+            <div>
+                
             </div>
             <br> 
-            <div class="row portfolio-container">
+            <div class="cards">
+                <h1 class="header">
+                    My Cart {{e}}
+                </h1>
+                <div class="services">
                 {% for request in pharma_requests.values %}
-                    <div class="col-lg-4 col-md-6 filter-app wow fadeInUp">
-                        <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                            <img class="card-img-top" src="{{request.product_image}}" style="height: 200px;">
-                            <div class="card-body">                       
-                                <div id="contents">
-                                    <p>Medicine : {{request.product_name}}</p>
+                    
+                        <div class="content content-1">
+                            <img  src="{{request.product_image}}" style="height: 200px;">
+                            <div>                       
+                                <div>
+                                    <p >Medicine : {{request.product_name}}</p>
                                     <p>Distributor's phone number: {{request.distributor_number}}</p>
                                     <p>Cost : {{request.price}}</p>
                                     <p>Date : {{request.time_of_request}} &nbsp;</p>
@@ -43,15 +46,16 @@
                                     <input type="hidden" name="owner_name" value="{{request.distributor_name}}">
                                     <input type="hidden" name="product_name" value="{{request.product_name}}">
                                     <input type="hidden" name="cost" value="{{request.price}}">
-                                    <button class="btn btn-outline-info" type="submit" ><i class="fa fa-star-o" aria-hidden="true"></i>  Review</button>
+                                    <button class="reviewbtn" type="submit" > Review</button>
                                 </form>
                                 {%endif%}
                                      
                                 <br>
                             </div>
                         </div>
-                    </div> 
+                    
                 {% endfor %}
+            </div>
             </div>
         </div>
     </body>

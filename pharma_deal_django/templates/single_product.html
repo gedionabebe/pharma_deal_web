@@ -1,12 +1,9 @@
 {%extends "base.html"%}
 
 {%block content%}
-    <br>
-    <br>
-    <br>
-    <div class="row portfolio-container">
-        <div class="col-lg-6 col-md-8 mx-auto filter-app wow fadeInUp">
-            <div class=" card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
+    <div class="cards" style="width:max-content;">
+          <div class="services">
+            <div class="content content-1">
                 {% for pro in product.values %}
                 <img class="card-img-top" src="{{pro.product_image}}" style="height:200px;width: 200px;align-self: center;" >
                 <div class="card-body"> 
@@ -28,47 +25,51 @@
                     <input type="hidden" name="distributor" value="{{pro.user_id}}">
                     <input type="hidden" name="product_id" value="{{pro.product_id}}">      
                     <input type="hidden" name="cost" value="{{pro.price}}">
-                    <button class="btn btn-primary"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true"></i>  Add to cart</button>
+                    <button class="addtocartbtn"  type="submit"><i class="fa fa-cart-plus" aria-hidden="true" style="font-size:1.2em; margin:5px;"></i>  Add to cart</button>
                   </form>
                   {%endif%}
                 </div>
                 {%endfor%}
             </div>
-            
+            </div>
+            </div>            
             <br>
-            <h2 class="h2 mx-auto">Reviews</h2>
+                <h2 class="reviews">Reviews</h2>
             <br>
-            {% for review in reviews.values %}
-            <div class="card my-2" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)">
-                <div class="card-body">
-                    <p style="font-size: 25px; font-weight: 400;">By:  {{review.user_name}}</p>
-                    {% if review.user_rating == '1' %}
-                    <span>&#11088;</span>
-                    {%elif review.user_rating == 2%}
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    {%elif review.user_rating == '3'%}
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    {%elif review.user_rating == '4'%}
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    {%elif review.user_rating == '5'%}
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    <span>&#11088;</span>
-                    {%endif%}
-                    <br>
-                    <p style="font-size: 20px; font-weight: 300px; padding-top: 8px;">  {{review.user_review}}</p>
+            <div class="cards">
+                <div class="services">
+                    {% for review in reviews.values %}
+                    
+                        <div class="content content-1">
+                            <p style="font-size: 25px; font-weight: 400;">By:  {{review.user_name}}</p>
+                            {% if review.user_rating == '1' %}
+                            <span>&#11088;</span>
+                            {%elif review.user_rating == 2%}
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            {%elif review.user_rating == '3'%}
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            {%elif review.user_rating == '4'%}
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            {%elif review.user_rating == '5'%}
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            <span>&#11088;</span>
+                            {%endif%}
+                            <br>
+                            <p style="font-size: 20px; font-weight: 300px; padding-top: 8px;">  {{review.user_review}}</p>
+                        </div>    
+                
+                    {%endfor%}
                 </div>
             </div>
-            {%endfor%}
-            
         </div>
     </div>              
 {%endblock%}

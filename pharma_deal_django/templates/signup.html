@@ -21,7 +21,7 @@
         letter-spacing: -1px;
     }
     a {
-      color: #5469d4;
+      color: #049267;
       text-decoration: unset;
     }
     .login-root {
@@ -73,7 +73,7 @@
         box-shadow: inset 0 0 0 2px #e3e8ee;
     }
     .box-background--blue {
-        background-color: #5469d4;
+        background-color: #03925e;
     }
     .box-background--white {
       background-color: #ffffff; 
@@ -85,7 +85,7 @@
         background-color: #e3e8ee;
     }
     .box-background--cyan200 {
-        background-color: #7fd3ed;
+        background-color: #049267;
     }
     .padding-top--64 {
       padding-top: 64px;
@@ -164,7 +164,7 @@
     }
 
     input[type="submit"] {
-        background-color: rgb(84, 105, 212);
+        background-color: #049267;
         box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
                     rgba(0, 0, 0, 0) 0px 0px 0px 0px, 
                     rgba(0, 0, 0, 0.12) 0px 1px 1px 0px, 
@@ -288,6 +288,7 @@
                     <form action="{%url 'signup'%}" method='POST'>
                         {% csrf_token %}
                         {{signup_form.as_p}}
+                        <br>
                         <input type='radio' id='distributor' name='kind' value="distributor">
                         <label for='distributor'>Distributor</label>
                         <input type='radio' id='pharmacy' name='kind' value="pharmacy">
